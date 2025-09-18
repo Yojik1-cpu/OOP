@@ -11,6 +11,7 @@ class HeapSortTest {
         assertArrayEquals(expected, result);
     }
 
+
     @Test
     void testSortAlreadySorted() {
         int[] input = {1, 2, 3, 4, 5};

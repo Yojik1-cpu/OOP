@@ -1,22 +1,24 @@
 package org.example;
 public class HeapSort {
+    private HeapSort() {}
     public static int[] heapsort(int[] arr) {
         if (arr == null || arr.length <= 1) {
             return arr;
         }
 
+        int[] result = arr.clone();
         int n = arr.length;
         for (int i = n / 2 - 1; i >= 0; i--) {
-            heapify(arr, n, i);
+            heapify(result, n, i);
         }
 
         for (int i = n - 1; i > 0; i--) {
-            int temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
-            heapify(arr, i, 0);
+            int temp = result[0];
+            result[0] = result[i];
+            result[i] = temp;
+            heapify(result, i, 0);
         }
-        return arr;
+        return result;
     }
 
     private static void heapify(int[] array, int n, int i) {
