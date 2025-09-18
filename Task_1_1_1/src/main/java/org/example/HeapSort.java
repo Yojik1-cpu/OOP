@@ -1,6 +1,8 @@
 package org.example;
+
 public class HeapSort {
     private HeapSort() {}
+
     public static int[] heapsort(int[] arr) {
         if (arr == null || arr.length <= 1) {
             return arr;
