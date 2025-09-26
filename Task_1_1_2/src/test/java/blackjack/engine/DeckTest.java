@@ -1,9 +1,8 @@
 package blackjack.engine;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.HashSet;
 import java.util.Set;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,7 +23,9 @@ class DeckTest {
     void resetRestoresAndShuffles() {
         Deck deck = new Deck();
         int first = deck.drawCard();
-        for (int i = 1; i < 10; i++) deck.drawCard();
+        for (int i = 1; i < 10; i++) {
+            deck.drawCard();
+        }
         deck.reset();
         // после reset снова 52 карты и счётчик на нуле
         Set<Integer> seen = new HashSet<>();
