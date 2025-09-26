@@ -1,14 +1,13 @@
 package blackjack;
 
+import blackjack.units.Card;
 import blackjack.engine.Game;
 import blackjack.units.Participant;
 import blackjack.units.Dealer;
 
 import java.util.List;
-
-import blackjack.units.Card;
-
 import java.util.Scanner;
+
 /**
  * Консольный интерфейс для игры в блэкджек.
  * Управление осуществляется клавишами 1 и 0.

@@ -48,7 +48,9 @@ public class Game {
 
     //ход игрока
     public void playerHit() {
-        if (finished) return;
+        if (finished) {
+            return;
+        }
         player.takeCard(deck);
         if (player.getHand().isBust()) {
             finished = true;
@@ -59,11 +61,11 @@ public class Game {
 
     //игрок больше не берёт карт
     public void playerStand() {
-        if (finished) return;
-
+        if (finished) {
+            return;
+        }
         dealerHoleHidden = false;
         dealer.play(deck);
-
         determineOutcome();
     }
 

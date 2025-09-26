@@ -1,12 +1,12 @@
 package blackjack.engine;
 
+import blackjack.units.Card;
+import blackjack.units.Hand;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import blackjack.units.Card;
-import blackjack.units.Hand;
 
 /**
  * Вспомогательный класс для определения исхода раунда.

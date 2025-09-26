@@ -40,7 +40,6 @@ public class Deck {
             deckArr[i] = i;
         }
         shuffle();
-
         cnt = 0;
     }
 }

@@ -19,7 +19,6 @@ public class Hand {
         return cards;
     }
 
-    //сумма карт "руки"
     public int getValue() {
         int sum = 0;
         int aces = 0;

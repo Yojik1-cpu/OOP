@@ -12,7 +12,6 @@ public class Dealer extends Participant {
         super(displayName);
     }
 
-    //дилер играет, пока сумма карт не равна 17
     public void play(Deck deck) {
         while (getHand().getValue() < 17) {
             takeCard(deck);
