@@ -2,7 +2,7 @@ package blackjack.units;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CardTest {
     private static int id(int suitIdx, int rankIdx) {

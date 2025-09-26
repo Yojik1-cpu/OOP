@@ -2,6 +2,10 @@ package blackjack.engine;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Колода из 52 карт.
+ * Поддерживает тасовку и выдачу карт по одной.
+ */
 public class Deck {
     private final int[] deckArr;
     private int cnt = 0;
@@ -9,7 +13,9 @@ public class Deck {
     //создание колоды
     public Deck() {
         deckArr = new int[52];
-        for (int i = 0; i < 52; i++) deckArr[i] = i;
+        for (int i = 0; i < 52; i++) {
+            deckArr[i] = i;
+        }
         shuffle();
     }
 
@@ -30,7 +36,9 @@ public class Deck {
 
     //сброс колоды
     public void reset() {
-        for (int i = 0; i < 52; i++) deckArr[i] = i;
+        for (int i = 0; i < 52; i++) {
+            deckArr[i] = i;
+        }
         shuffle();
 
         cnt = 0;

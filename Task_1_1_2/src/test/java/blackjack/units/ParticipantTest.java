@@ -1,9 +1,11 @@
 package blackjack.units;
 
-import blackjack.engine.Deck;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import blackjack.engine.Deck;
 
 class ParticipantTest {
     static class FakeDeck extends Deck {

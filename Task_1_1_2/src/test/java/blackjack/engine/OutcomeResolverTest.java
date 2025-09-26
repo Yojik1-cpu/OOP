@@ -1,11 +1,17 @@
 package blackjack.engine;
 
-import blackjack.units.Card;
-import blackjack.units.Hand;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import blackjack.units.Card;
+import blackjack.units.Hand;
+
+/**
+ * Вспомогательный класс для определения исхода раунда.
+ * Проверяет блэкджек после раздачи и определяет победителя в финале.
+ */
 class OutcomeResolverTest {
 
     private static int id(int s, int r) {
@@ -20,7 +26,8 @@ class OutcomeResolverTest {
         Hand d1 = new Hand();
         d1.addCard(new Card(id(2, 0)));
         d1.addCard(new Card(id(3, 0)));
-        assertEquals(Game.Outcome.PLAYER_BLACKJACK, OutcomeResolver.resolveAfterInitialDeal(p1, d1));
+        assertEquals(Game.Outcome.PLAYER_BLACKJACK,
+                OutcomeResolver.resolveAfterInitialDeal(p1, d1));
 
         Hand p2 = new Hand();
         p2.addCard(new Card(id(0, 0)));
@@ -28,7 +35,8 @@ class OutcomeResolverTest {
         Hand d2 = new Hand();
         d2.addCard(new Card(id(2, 8)));
         d2.addCard(new Card(id(3, 12)));
-        assertEquals(Game.Outcome.DEALER_BLACKJACK, OutcomeResolver.resolveAfterInitialDeal(p2, d2));
+        assertEquals(Game.Outcome.DEALER_BLACKJACK,
+                OutcomeResolver.resolveAfterInitialDeal(p2, d2));
 
         Hand p3 = new Hand();
         p3.addCard(new Card(id(0, 8)));
@@ -36,7 +44,8 @@ class OutcomeResolverTest {
         Hand d3 = new Hand();
         d3.addCard(new Card(id(2, 8)));
         d3.addCard(new Card(id(3, 12)));
-        assertEquals(Game.Outcome.PUSH, OutcomeResolver.resolveAfterInitialDeal(p3, d3));
+        assertEquals(Game.Outcome.PUSH,
+                OutcomeResolver.resolveAfterInitialDeal(p3, d3));
 
         Hand p4 = new Hand();
         p4.addCard(new Card(id(0, 0)));

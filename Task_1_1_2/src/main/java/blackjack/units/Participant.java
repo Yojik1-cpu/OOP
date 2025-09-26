@@ -2,6 +2,10 @@ package blackjack.units;
 
 import blackjack.engine.Deck;
 
+/**
+ * Участник игры (игрок или дилер).
+ * Имеет имя и руку, может брать карты из колоды.
+ */
 public class Participant {
     private final String displayName;
     private final Hand hand = new Hand();
@@ -30,6 +34,8 @@ public class Participant {
 
     @Override
     public String toString() {
-        return displayName + ": " + hand;
+        return displayName
+                + ": "
+                + hand;
     }
 }

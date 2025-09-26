@@ -1,9 +1,12 @@
 package blackjack.engine;
 
-import blackjack.units.Card;
 import blackjack.units.Dealer;
 import blackjack.units.Participant;
 
+/**
+ * Основная логика одного раунда блэкджека.
+ * Управляет игроком, дилером и исходом игры.
+ */
 public class Game {
     public enum Outcome {PLAYER_BLACKJACK, DEALER_BLACKJACK, PLAYER_BUST, DEALER_BUST, PLAYER_WIN, DEALER_WIN, PUSH}
 

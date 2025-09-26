@@ -9,7 +9,10 @@ import java.util.List;
 import blackjack.units.Card;
 
 import java.util.Scanner;
-
+/**
+ * Консольный интерфейс для игры в блэкджек.
+ * Управление осуществляется клавишами 1 и 0.
+ */
 public class UI_IO {
     private final Game game = new Game();
     private final Scanner in = new Scanner(System.in);
@@ -17,10 +20,10 @@ public class UI_IO {
     //основной цикл игры
     public void run() {
         System.out.println(
-                "Приветствуем Вас в игре Блэкджек!\n" +
-                        "Желаете ли вы войти в игру?\n" +
-                        "1 - Начать игру\n" +
-                        "0 - Выйти из игры"
+                "Приветствуем Вас в игре Блэкджек!\n"
+                        + "Желаете ли вы войти в игру?\n"
+                        + "1 - Начать игру\n"
+                        + "0 - Выйти из игры"
         );
 
         String choice = read10();
@@ -33,9 +36,9 @@ public class UI_IO {
             playOneRound();
 
             System.out.println(
-                    "Хочешь сыграть ещё?\n" +
-                            "1 - Войти в игру\n" +
-                            "0 - Выйти"
+                    "Хочешь сыграть ещё?\n"
+                            + "1 - Войти в игру\n"
+                            + "0 - Выйти"
             );
 
             String again = read10();
@@ -55,7 +58,8 @@ public class UI_IO {
         // блекджек
         if (game.isFinished()) {
             printHands(false);
-            System.out.println("Итог: " + game.getOutcome());
+            System.out.println("Итог: "
+                    + game.getOutcome());
             return;
         }
 
@@ -68,13 +72,15 @@ public class UI_IO {
                 printHands(true);
                 if (game.isFinished()) {
                     printHands(false);
-                    System.out.println("Итог: " + localizeOutcome(game.getOutcome()));
+                    System.out.println("Итог: "
+                            + localizeOutcome(game.getOutcome()));
                     return;
                 }
             } else {
                 game.playerStand();
                 printHands(false);
-                System.out.println("Итог: " + localizeOutcome(game.getOutcome()));
+                System.out.println("Итог: "
+                        + localizeOutcome(game.getOutcome()));
                 return;
             }
         }
@@ -85,7 +91,9 @@ public class UI_IO {
         System.out.print("> ");
         while (true) {
             String s = in.nextLine().trim();
-            if (s.equals("1") || s.equals("0")) return s;
+            if (s.equals("1") || s.equals("0")) {
+                return s;
+            }
             System.out.print("Ожидается 1 или 0. Повторите ввод: ");
         }
     }
@@ -95,15 +103,25 @@ public class UI_IO {
         Participant p = game.getPlayer();
         Dealer d = game.getDealer();
 
-        System.out.println("Игрок: " + p.getHand().getCards() +
-                " (сумма " + p.getHand().getValue() + ")");
+        System.out.println("Игрок: "
+                + p.getHand().getCards()
+                + " (сумма "
+                + p.getHand().getValue()
+                + ")");
 
         if (hideDealerHole) {
             List<Card> cards = d.getHand().getCards();
-            System.out.println(d.getDisplayName() + ": [" + cards.get(0) + ", ??]");
+            System.out.println(d.getDisplayName()
+                    + ": ["
+                    + cards.get(0)
+                    + ", ??]");
         } else {
-            System.out.println(d.getDisplayName() + ": " + d.getHand().getCards() +
-                    " (сумма " + d.getHand().getValue() + ")");
+            System.out.println(d.getDisplayName()
+                    + ": "
+                    + d.getHand().getCards()
+                    + " (сумма "
+                    + d.getHand().getValue()
+                    + ")");
         }
     }
 

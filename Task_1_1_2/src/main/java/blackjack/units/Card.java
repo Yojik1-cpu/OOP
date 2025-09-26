@@ -1,5 +1,9 @@
 package blackjack.units;
 
+/**
+ * Карта стандартной колоды (52 карты).
+ * Хранит масть и ранг.
+ */
 public class Card {
     private final String suit;
     private final String rank;
