@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class UI_IOTest {
+class UiIoTest {
 
     private InputStream oldIn;
     private PrintStream oldOut;
@@ -38,7 +38,7 @@ class UI_IOTest {
         String script = String.join(System.lineSeparator(), "1", "0", "0") + System.lineSeparator();
         System.setIn(new ByteArrayInputStream(script.getBytes()));
 
-        new UI_IO().run();
+        new UiIo().run();
 
         String out = bout.toString();
         assertTrue(out.contains("Приветствуем Вас в игре"));

@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Консольный интерфейс для игры в блэкджек.
  * Управление осуществляется клавишами 1 и 0.
  */
-public class UI_IO {
+public class UiIo {
     private final Game game = new Game();
     private final Scanner in = new Scanner(System.in);
 
