@@ -126,22 +126,34 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutcome()" class="member-name-link">getOutcome</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Возвращает итог текущего раунда.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../units/Participant.html" title="class in blackjack.units">Participant</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlayer()" class="member-name-link">getPlayer</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Возвращают игрока и дилера.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFinished()" class="member-name-link">isFinished</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Проверяет, завершён ли раунд.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playerHit()" class="member-name-link">playerHit</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Обрабатывает действие игрока «взять карту».</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playerStand()" class="member-name-link">playerStand</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Обрабатывает действие игрока «остановиться».</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startRound()" class="member-name-link">startRound</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Запускает новый раунд.</div>
+</div>
 </div>
 </div>
 </div>
@@ -177,30 +189,38 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="startRound()">
 <h3>startRound</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">startRound</span>()</div>
+<div class="block">Запускает новый раунд.
+ Проверяет наличие блэкджека после раздачи.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="playerHit()">
 <h3>playerHit</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playerHit</span>()</div>
+<div class="block">Обрабатывает действие игрока «взять карту».
+ Проверяет перебор.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="playerStand()">
 <h3>playerStand</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playerStand</span>()</div>
+<div class="block">Обрабатывает действие игрока «остановиться».
+ Дилер доигрывает до 17 и определяется исход раунда.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getOutcome()">
 <h3>getOutcome</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></span>&nbsp;<span class="element-name">getOutcome</span>()</div>
+<div class="block">Возвращает итог текущего раунда.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlayer()">
 <h3>getPlayer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../units/Participant.html" title="class in blackjack.units">Participant</a></span>&nbsp;<span class="element-name">getPlayer</span>()</div>
+<div class="block">Возвращают игрока и дилера.</div>
 </section>
 </li>
 <li>
@@ -213,6 +233,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isFinished()">
 <h3>isFinished</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFinished</span>()</div>
+<div class="block">Проверяет, завершён ли раунд.</div>
 </section>
 </li>
 </ul>
