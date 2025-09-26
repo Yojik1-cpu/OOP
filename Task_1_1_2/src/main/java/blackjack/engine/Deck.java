@@ -10,7 +10,9 @@ public class Deck {
     private final int[] deckArr;
     private int cnt = 0;
 
-    //создание колоды
+    /**
+     * Создаёт новую колоду из 52 карт и выполняет начальную тасовку.
+     */
     public Deck() {
         deckArr = new int[52];
         for (int i = 0; i < 52; i++) {
@@ -19,7 +21,9 @@ public class Deck {
         shuffle();
     }
 
-    // алгоритм Фишера-Йейтса для тасовки
+    /**
+     * Перемешивает колоду с использованием алгоритма Фишера-Йейтса.
+     */
     public void shuffle() {
         for (int i = deckArr.length - 1; i > 0; i--) {
             int j = ThreadLocalRandom.current().nextInt(i + 1);
@@ -29,12 +33,17 @@ public class Deck {
         }
     }
 
-    //взять карту из колоды
+    /**
+     * Берёт следующую карту из колоды.
+     */
     public int drawCard() {
         return deckArr[cnt++];
     }
 
-    //сброс колоды
+    /**
+     * Сбрасывает колоду: возвращает все 52 карты,
+     * перемешивает и обнуляет счётчик.
+     */
     public void reset() {
         for (int i = 0; i < 52; i++) {
             deckArr[i] = i;
