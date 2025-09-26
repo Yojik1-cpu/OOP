@@ -3,7 +3,8 @@ package blackjack.engine;
 import blackjack.units.Hand;
 
 public final class OutcomeResolver {
-    private OutcomeResolver() {}
+    private OutcomeResolver() {
+    }
 
     //отсматриваем моментальные блэкджеки
     public static Game.Outcome resolveAfterInitialDeal(Hand player, Hand dealer) {
@@ -11,8 +12,8 @@ public final class OutcomeResolver {
         boolean dBJ = dealer.isBlackjack();
 
         if (pBJ && dBJ) return Game.Outcome.PUSH;
-        if (pBJ)        return Game.Outcome.PLAYER_BLACKJACK;
-        if (dBJ)        return Game.Outcome.DEALER_BLACKJACK;
+        if (pBJ) return Game.Outcome.PLAYER_BLACKJACK;
+        if (dBJ) return Game.Outcome.DEALER_BLACKJACK;
 
         return null;
     }
@@ -27,8 +28,8 @@ public final class OutcomeResolver {
         int pv = player.getValue();
         int dv = dealer.getValue();
 
-        if (pv > dv)  return Game.Outcome.PLAYER_WIN;
-        if (pv < dv)  return Game.Outcome.DEALER_WIN;
+        if (pv > dv) return Game.Outcome.PLAYER_WIN;
+        if (pv < dv) return Game.Outcome.DEALER_WIN;
         return Game.Outcome.PUSH;
     }
 }

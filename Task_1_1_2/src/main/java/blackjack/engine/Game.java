@@ -5,7 +5,7 @@ import blackjack.units.Dealer;
 import blackjack.units.Participant;
 
 public class Game {
-    public enum Outcome { PLAYER_BLACKJACK, DEALER_BLACKJACK, PLAYER_BUST, DEALER_BUST, PLAYER_WIN, DEALER_WIN, PUSH }
+    public enum Outcome {PLAYER_BLACKJACK, DEALER_BLACKJACK, PLAYER_BUST, DEALER_BUST, PLAYER_WIN, DEALER_WIN, PUSH}
 
     private final Deck deck = new Deck();
     private final Participant player = new Participant("Игрок");

@@ -43,11 +43,11 @@ public class Hand {
         return cards.size() == 2 && getValue() == 21;
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return getValue() > 21;
     }
 
-    public void clear(){
+    public void clear() {
         cards.clear();
     }
 

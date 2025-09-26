@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
 
-    private static int id(int suitIdx, int rankIdx) { return suitIdx * 13 + rankIdx; }
+    private static int id(int suitIdx, int rankIdx) {
+        return suitIdx * 13 + rankIdx;
+    }
 
     @Test
     void value_NoAces() {

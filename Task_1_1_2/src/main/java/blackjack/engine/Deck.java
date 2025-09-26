@@ -1,9 +1,11 @@
 package blackjack.engine;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Deck {
     private final int[] deckArr;
     private int cnt = 0;
+
     //создание колоды
     public Deck() {
         deckArr = new int[52];
@@ -12,7 +14,7 @@ public class Deck {
     }
 
     // алгоритм Фишера-Йейтса для тасовки
-    public void shuffle(){
+    public void shuffle() {
         for (int i = deckArr.length - 1; i > 0; i--) {
             int j = ThreadLocalRandom.current().nextInt(i + 1);
             int tmp = deckArr[i];

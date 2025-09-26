@@ -3,7 +3,9 @@ package blackjack;
 import blackjack.engine.Game;
 import blackjack.units.Participant;
 import blackjack.units.Dealer;
+
 import java.util.List;
+
 import blackjack.units.Card;
 
 import java.util.Scanner;
@@ -108,14 +110,22 @@ public class UI_IO {
     //локализация
     private String localizeOutcome(Game.Outcome outcome) {
         switch (outcome) {
-            case PLAYER_BLACKJACK: return "Блэкджек у игрока";
-            case DEALER_BLACKJACK: return "Блэкджек у дилера";
-            case PLAYER_BUST: return "Перебор у игрока";
-            case DEALER_BUST: return "Перебор у дилера";
-            case PLAYER_WIN: return "Игрок победил";
-            case DEALER_WIN: return "Дилер победил";
-            case PUSH: return "Ничья";
-            default: return "?";
+            case PLAYER_BLACKJACK:
+                return "Блэкджек у игрока";
+            case DEALER_BLACKJACK:
+                return "Блэкджек у дилера";
+            case PLAYER_BUST:
+                return "Перебор у игрока";
+            case DEALER_BUST:
+                return "Перебор у дилера";
+            case PLAYER_WIN:
+                return "Игрок победил";
+            case DEALER_WIN:
+                return "Дилер победил";
+            case PUSH:
+                return "Ничья";
+            default:
+                return "?";
         }
     }
 }

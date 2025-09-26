@@ -2,6 +2,7 @@ package blackjack.units;
 
 import blackjack.engine.Deck;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DealerTest {
@@ -9,10 +10,20 @@ class DealerTest {
     static class FakeDeck extends Deck {
         private final int[] seq;
         private int i = 0;
-        FakeDeck(int... seq){ this.seq = seq; }
-        @Override public int drawCard() { return seq[i++]; }
+
+        FakeDeck(int... seq) {
+            this.seq = seq;
+        }
+
+        @Override
+        public int drawCard() {
+            return seq[i++];
+        }
     }
-    private static int id(int suitIdx, int rankIdx) { return suitIdx * 13 + rankIdx; }
+
+    private static int id(int suitIdx, int rankIdx) {
+        return suitIdx * 13 + rankIdx;
+    }
 
     @Test
     void play_HitsTo17() {

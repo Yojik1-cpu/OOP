@@ -1,10 +1,13 @@
 package blackjack.units;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
-    private static int id(int suitIdx, int rankIdx) { return suitIdx * 13 + rankIdx; }
+    private static int id(int suitIdx, int rankIdx) {
+        return suitIdx * 13 + rankIdx;
+    }
 
     @Test
     void ctorById_Lowest() {
