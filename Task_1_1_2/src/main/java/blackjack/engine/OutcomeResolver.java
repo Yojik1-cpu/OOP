@@ -12,16 +12,16 @@ public final class OutcomeResolver {
 
     //отсматриваем моментальные блэкджеки
     public static Game.Outcome resolveAfterInitialDeal(Hand player, Hand dealer) {
-        boolean pBJ = player.isBlackjack();
-        boolean dBJ = dealer.isBlackjack();
+        boolean pBj = player.isBlackjack();
+        boolean dBj = dealer.isBlackjack();
 
-        if (pBJ && dBJ) {
+        if (pBj && dBj) {
             return Game.Outcome.PUSH;
         }
-        if (pBJ) {
+        if (pBj) {
             return Game.Outcome.PLAYER_BLACKJACK;
         }
-        if (dBJ) {
+        if (dBj) {
             return Game.Outcome.DEALER_BLACKJACK;
         }
         return null;
