@@ -16,7 +16,7 @@ public class Game {
     private boolean finished = false;
     private Outcome outcome = null;
 
-
+    //начало раунда
     public void startRound() {
         // подготовка
         player.getHand().clear();
@@ -43,6 +43,7 @@ public class Game {
         }
     }
 
+    //ход игрока
     public void playerHit() {
         if (finished) return;
         player.takeCard(deck);
@@ -53,6 +54,7 @@ public class Game {
         }
     }
 
+    //игрок больше не берёт карт
     public void playerStand() {
         if (finished) return;
 
@@ -62,6 +64,7 @@ public class Game {
         determineOutcome();
     }
 
+    //определяем исход
     private void determineOutcome() {
         int playerValue = player.getHand().getValue();
         int dealerValue = dealer.getHand().getValue();

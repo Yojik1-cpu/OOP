@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Deck {
     private final int[] deckArr;
     private int cnt = 0;
-
+    //создание колоды
     public Deck() {
         deckArr = new int[52];
         for (int i = 0; i < 52; i++) deckArr[i] = i;
@@ -21,13 +21,17 @@ public class Deck {
         }
     }
 
+    //взять карту из колоды
     public int drawCard() {
         return deckArr[cnt++];
     }
 
+    //сброс колоды
     public void reset() {
         for (int i = 0; i < 52; i++) deckArr[i] = i;
         shuffle();
+
+        cnt = 0;
     }
 }
 

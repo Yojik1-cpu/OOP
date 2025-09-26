@@ -13,7 +13,7 @@ public class Card {
             "Валет", "Дама", "Король", "Туз"
     };
 
-    // конструктор из id (0...51)
+    // конструктор из id = 0...51
     public Card(int id) {
         int suitIndex = id / 13;
         int rankIndex = id % 13;

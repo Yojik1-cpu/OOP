@@ -12,6 +12,7 @@ public class UI_IO {
     private final Game game = new Game();
     private final Scanner in = new Scanner(System.in);
 
+    //основной цикл игры
     public void run() {
         System.out.println(
                 "Приветствуем Вас в игре Блэкджек!\n" +
@@ -20,7 +21,7 @@ public class UI_IO {
                         "0 - Выйти из игры"
         );
 
-        String choice = read10("> ");
+        String choice = read10();
         if (choice.equals("0")) {
             System.out.println("Спасибо за игру! Пока!");
             return;
@@ -35,7 +36,7 @@ public class UI_IO {
                             "0 - Выйти"
             );
 
-            String again = read10("> ");
+            String again = read10();
             if (again.equals("0")) {
                 System.out.println("Спасибо за игру! Пока!");
                 return;
@@ -43,6 +44,7 @@ public class UI_IO {
         }
     }
 
+    //один раунд
     private void playOneRound() {
         game.startRound();
 
@@ -57,7 +59,7 @@ public class UI_IO {
 
         while (true) {
             System.out.println("Ваш ход: 1 - Взять карту, 0 - Остановиться");
-            String cmd = read10("> ");
+            String cmd = read10();
 
             if (cmd.equals("1")) {
                 game.playerHit();
@@ -77,8 +79,8 @@ public class UI_IO {
     }
 
     // вывод строки для ввода пользователя
-    private String read10(String prompt) {
-        System.out.print(prompt);
+    private String read10() {
+        System.out.print("> ");
         while (true) {
             String s = in.nextLine().trim();
             if (s.equals("1") || s.equals("0")) return s;
@@ -96,13 +98,14 @@ public class UI_IO {
 
         if (hideDealerHole) {
             List<Card> cards = d.getHand().getCards();
-            System.out.println(d.getDisplayName() + ": [" + cards.getFirst() + ", ??]");
+            System.out.println(d.getDisplayName() + ": [" + cards.get(0) + ", ??]");
         } else {
             System.out.println(d.getDisplayName() + ": " + d.getHand().getCards() +
                     " (сумма " + d.getHand().getValue() + ")");
         }
     }
 
+    //локализация
     private String localizeOutcome(Game.Outcome outcome) {
         switch (outcome) {
             case PLAYER_BLACKJACK: return "Блэкджек у игрока";
