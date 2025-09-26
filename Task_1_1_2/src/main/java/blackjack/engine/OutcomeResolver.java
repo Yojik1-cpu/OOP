@@ -10,24 +10,29 @@ public final class OutcomeResolver {
     private OutcomeResolver() {
     }
 
-    //отсматриваем моментальные блэкджеки
+    /**
+     * Определяет исход после начальной раздачи:
+     * проверяет наличие блэкджека у игрока и дилера.
+     */
     public static Game.Outcome resolveAfterInitialDeal(Hand player, Hand dealer) {
-        boolean pBj = player.isBlackjack();
-        boolean dBj = dealer.isBlackjack();
+        boolean playerBlackjack = player.isBlackjack();
+        boolean dealerBlackjack = dealer.isBlackjack();
 
-        if (pBj && dBj) {
+        if (playerBlackjack && dealerBlackjack) {
             return Game.Outcome.PUSH;
         }
-        if (pBj) {
+        if (playerBlackjack) {
             return Game.Outcome.PLAYER_BLACKJACK;
         }
-        if (dBj) {
+        if (dealerBlackjack) {
             return Game.Outcome.DEALER_BLACKJACK;
         }
         return null;
     }
 
-    //остальные исходы
+    /**
+     * Определяет остальные возможные исходы.
+     */
     public static Game.Outcome resolveFinal(Hand player, Hand dealer) {
         // перебор
         if (player.isBust()) {
@@ -37,7 +42,6 @@ public final class OutcomeResolver {
             return Game.Outcome.DEALER_BUST;
         }
 
-        // сравнение очков
         int pv = player.getValue();
         int dv = dealer.getValue();
 

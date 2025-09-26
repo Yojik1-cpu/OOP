@@ -8,7 +8,15 @@ import blackjack.units.Participant;
  * Управляет игроком, дилером и исходом игры.
  */
 public class Game {
-    public enum Outcome {PLAYER_BLACKJACK, DEALER_BLACKJACK, PLAYER_BUST, DEALER_BUST, PLAYER_WIN, DEALER_WIN, PUSH}
+    public enum Outcome {
+        PLAYER_BLACKJACK,
+        DEALER_BLACKJACK,
+        PLAYER_BUST,
+        DEALER_BUST,
+        PLAYER_WIN,
+        DEALER_WIN,
+        PUSH
+    }
 
     private final Deck deck = new Deck();
     private final Participant player = new Participant("Игрок");
@@ -19,7 +27,10 @@ public class Game {
     private boolean finished = false;
     private Outcome outcome = null;
 
-    //начало раунда
+    /**
+     * Запускает новый раунд.
+     * Проверяет наличие блэкджека после раздачи.
+     */
     public void startRound() {
         // подготовка
         player.getHand().clear();
@@ -38,7 +49,8 @@ public class Game {
         dealerHoleHidden = true;
 
         // проверяем блэкджеки
-        Outcome early = OutcomeResolver.resolveAfterInitialDeal(player.getHand(), dealer.getHand());
+        Outcome early = OutcomeResolver.resolveAfterInitialDeal(player.getHand(),
+                dealer.getHand());
         if (early != null) {
             finished = true;
             dealerHoleHidden = false; //открываем для UI
@@ -46,7 +58,10 @@ public class Game {
         }
     }
 
-    //ход игрока
+    /**
+     * Обрабатывает действие игрока «взять карту».
+     * Проверяет перебор.
+     */
     public void playerHit() {
         if (finished) {
             return;
@@ -59,7 +74,10 @@ public class Game {
         }
     }
 
-    //игрок больше не берёт карт
+    /**
+     * Обрабатывает действие игрока «остановиться».
+     * Дилер доигрывает до 17 и определяется исход раунда.
+     */
     public void playerStand() {
         if (finished) {
             return;
@@ -69,7 +87,9 @@ public class Game {
         determineOutcome();
     }
 
-    //определяем исход
+    /**
+     * Определяет итог раунда, сравнивая руки игрока и дилера.
+     */
     private void determineOutcome() {
         int playerValue = player.getHand().getValue();
         int dealerValue = dealer.getHand().getValue();
@@ -87,11 +107,18 @@ public class Game {
         finished = true;
     }
 
-    // гетеры
+    // =========ГЕТЕРЫ========= //
+
+    /**
+     * Возвращает итог текущего раунда.
+     */
     public Outcome getOutcome() {
         return outcome;
     }
 
+    /**
+     * Возвращают игрока и дилера.
+     */
     public Participant getPlayer() {
         return player;
     }
@@ -100,6 +127,9 @@ public class Game {
         return dealer;
     }
 
+    /**
+     * Проверяет, завершён ли раунд.
+     */
     public boolean isFinished() {
         return finished;
     }

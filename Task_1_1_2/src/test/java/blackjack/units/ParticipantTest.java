@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
     static class FakeDeck extends Deck {
         private final int[] seq;
-        private int i = 0;
+        private int index = 0;
 
         FakeDeck(int... seq) {
             this.seq = seq;
@@ -17,7 +17,7 @@ class ParticipantTest {
 
         @Override
         public int drawCard() {
-            return seq[i++];
+            return seq[index++];
         }
     }
 

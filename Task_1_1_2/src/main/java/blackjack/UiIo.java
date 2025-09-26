@@ -15,7 +15,10 @@ public class UiIo {
     private final Game game = new Game();
     private final Scanner in = new Scanner(System.in);
 
-    //основной цикл игры
+    /**
+     * Запускает основной игровой цикл.
+     * Запускает раунды и предлагает сыграть снова после окончания каждого раунда.
+     */
     public void run() {
         System.out.println(
                 "Приветствуем Вас в игре Блэкджек!\n"
@@ -47,7 +50,9 @@ public class UiIo {
         }
     }
 
-    //один раунд
+    /**
+     * Проводит один раунд игры
+     */
     private void playOneRound() {
         game.startRound();
 

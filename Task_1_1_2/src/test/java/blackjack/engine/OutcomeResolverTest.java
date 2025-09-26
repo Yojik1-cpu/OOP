@@ -7,10 +7,7 @@ import blackjack.units.Card;
 import blackjack.units.Hand;
 import org.junit.jupiter.api.Test;
 
-/**
- * Вспомогательный класс для определения исхода раунда.
- * Проверяет блэкджек после раздачи и определяет победителя в финале.
- */
+
 class OutcomeResolverTest {
 
     private static int id(int s, int r) {
