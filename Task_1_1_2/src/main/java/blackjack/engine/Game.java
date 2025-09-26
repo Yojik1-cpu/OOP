@@ -27,7 +27,6 @@ public class Game {
 
         deck.reset();
 
-
         // раздача: обе карты всем сразу
         player.takeCard(deck);
         dealer.takeCard(deck);
@@ -54,6 +53,46 @@ public class Game {
         }
     }
 
-    //прописать ход дилера и исход сравнения рук
+    public void playerStand() {
+        if (finished) return;
 
+        dealerHoleHidden = false;
+        dealer.play(deck);
+
+        determineOutcome();
+    }
+
+    private void determineOutcome() {
+        int playerValue = player.getHand().getValue();
+        int dealerValue = dealer.getHand().getValue();
+
+        if (dealer.getHand().isBust()) {
+            outcome = Outcome.DEALER_BUST;
+        } else if (playerValue > dealerValue) {
+            outcome = Outcome.PLAYER_WIN;
+        } else if (playerValue < dealerValue) {
+            outcome = Outcome.DEALER_WIN;
+        } else {
+            outcome = Outcome.PUSH;
+        }
+
+        finished = true;
+    }
+
+    // гетеры
+    public Outcome getOutcome() {
+        return outcome;
+    }
+
+    public Participant getPlayer() {
+        return player;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
 }

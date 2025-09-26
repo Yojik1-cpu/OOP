@@ -5,7 +5,7 @@ public class Card {
     private final String rank;
 
     private static final String[] SUITS = {
-            "Пики", "Черви", "Бубны", "Трефы"
+            "Пики", "Черви", "Бубны", "Крести"
     };
 
     private static final String[] RANKS = {
