@@ -1,10 +1,10 @@
 package expressions.atomic;
 
-import expressions.Expression;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import expressions.Expression;
+import org.junit.jupiter.api.Test;
 
 class NumberTest {
 

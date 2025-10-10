@@ -1,9 +1,9 @@
 package expressions.atomic;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import expressions.Expression;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class VariableTest {
     @Test

@@ -1,13 +1,13 @@
 package expressions;
 
-import expressions.atomic.Variable;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import expressions.atomic.Number;
+import expressions.atomic.Variable;
 import expressions.binary.Add;
 import expressions.binary.Mul;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ExpressionTest {
     @Test

@@ -1,11 +1,11 @@
 package expressions.binary;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import expressions.Expression;
 import expressions.atomic.Number;
 import expressions.atomic.Variable;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SubTest {
     @Test
