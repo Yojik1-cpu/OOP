@@ -9,15 +9,14 @@ public class Number extends Expression {
         this.value = value;
     }
 
-    public double eval(String variablesString){
+    public double eval(String variablesString) {
         return value;
     }
 
-    /** дописать
-    public String devirative(Variable variable){
-        ...
+    public Expression derivative(String variable) {
+        return new Number(0);
     }
-    */
+
 
     @Override
     public String toString() {

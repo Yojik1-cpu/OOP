@@ -1,7 +1,6 @@
 package expressions.binary;
 
 import expressions.Expression;
-import java.util.Map;
 
 public class Mul extends Expression {
     private final Expression right;
@@ -14,6 +13,13 @@ public class Mul extends Expression {
 
     public double eval(String variables) {
         return left.eval(variables) * right.eval(variables);
+    }
+
+    public Expression derivative(String variable) {
+        return new Add(
+                new Mul(left.derivative(variable), right),
+                new Mul(left, right.derivative(variable))
+        );
     }
 
     @Override

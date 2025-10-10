@@ -1,7 +1,6 @@
 package expressions.atomic;
 
 import expressions.Expression;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +44,7 @@ public class Variable extends Expression {
 
             String varName = parts[0].trim();
             double varValue;
-            
+
             try {
                 varValue = Double.parseDouble(parts[1].trim());
             } catch (NumberFormatException e) {
@@ -56,6 +55,14 @@ public class Variable extends Expression {
         }
 
         return variables;
+    }
+
+    public Expression derivative(String variable) {
+        if (this.name.equals(variable)) {
+            return new Number(1);
+        } else {
+            return new Number(0);
+        }
     }
 
     @Override

@@ -1,7 +1,6 @@
 package expressions.binary;
 
 import expressions.Expression;
-import java.util.Map;
 
 public class Sub extends Expression {
     private final Expression right;
@@ -14,6 +13,10 @@ public class Sub extends Expression {
 
     public double eval(String variables) {
         return left.eval(variables) - right.eval(variables);
+    }
+
+    public Expression derivative(String variable) {
+        return new Sub(left.derivative(variable), right.derivative(variable));
     }
 
     @Override
