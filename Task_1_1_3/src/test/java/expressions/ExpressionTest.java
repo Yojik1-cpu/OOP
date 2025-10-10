@@ -1,7 +1,7 @@
 package expressions;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import expressions.atomic.Number;
 import expressions.atomic.Variable;
@@ -13,10 +13,10 @@ class ExpressionTest {
     @Test
     public void testToStringNotNull() {
         Expression[] expressions = {
-                new Number(5),
-                new Variable("x"),
-                new Add(new Number(2), new Number(3)),
-                new Mul(new Number(2), new Variable("x"))
+            new Number(5),
+            new Variable("x"),
+            new Add(new Number(2), new Number(3)),
+            new Mul(new Number(2), new Variable("x"))
         };
 
         for (Expression expr : expressions) {
@@ -27,10 +27,10 @@ class ExpressionTest {
     @Test
     public void testDerivativeReturnsExpressionForAllTypes() {
         Expression[] expressions = {
-                new Number(5),
-                new Variable("x"),
-                new Add(new Number(2), new Number(3)),
-                new Mul(new Number(2), new Variable("x"))
+            new Number(5),
+            new Variable("x"),
+            new Add(new Number(2), new Number(3)),
+            new Mul(new Number(2), new Variable("x"))
         };
 
         for (Expression expr : expressions) {
@@ -59,8 +59,8 @@ class ExpressionTest {
     public void testZeroPropertyForAdd() {
         Expression a = new Variable("x");
         Expression zero = new Number(0);
-        Add aPlusZero = new Add(a, zero);
-        assertEquals(10.0, aPlusZero.eval("x=10"));
+        Add plusZero = new Add(a, zero);
+        assertEquals(10.0, plusZero.eval("x=10"));
     }
 
     @Test
