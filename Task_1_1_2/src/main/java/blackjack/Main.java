@@ -1,16 +1,17 @@
 package blackjack;
 
+import blackjack.UiIo.I18n;
+import blackjack.UiIo.GameController;
+
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
-/**
- * Точка входа в приложение.
- * Запускает игру в консоли.
- */
 public class Main {
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-        UiIo ui = new UiIo();
-        ui.run();
+
+        I18n.Lang lang = I18n.Lang.EN;
+        GameController gameController = new GameController(lang);
+        gameController.run();
     }
 }

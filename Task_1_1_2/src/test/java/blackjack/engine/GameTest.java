@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import blackjack.units.Dealer;
-import blackjack.units.Participant;
+import blackjack.models.Dealer;
+import blackjack.models.Participant;
 import org.junit.jupiter.api.Test;
-
-
 
 class GameTest {
 

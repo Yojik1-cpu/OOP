@@ -1,16 +1,13 @@
 package blackjack.engine;
 
-import blackjack.units.Dealer;
-import blackjack.units.Participant;
+import blackjack.models.Dealer;
+import blackjack.models.Participant;
 
-/**
- * Основная логика одного раунда блэкджека.
- * Управляет игроком, дилером и исходом игры.
- */
 public class Game {
     public enum Outcome {
         PLAYER_BLACKJACK,
         DEALER_BLACKJACK,
+        BOTH_BLACKJACK,
         PLAYER_BUST,
         DEALER_BUST,
         PLAYER_WIN,
@@ -22,20 +19,14 @@ public class Game {
     private final Participant player = new Participant("Игрок");
     private final Dealer dealer = new Dealer("Дилер");
 
-    private boolean dealerHoleHidden = false;
 
     private boolean finished = false;
     private Outcome outcome = null;
 
-    /**
-     * Запускает новый раунд.
-     * Проверяет наличие блэкджека после раздачи.
-     */
     public void startRound() {
         // подготовка
         player.getHand().clear();
         dealer.getHand().clear();
-        dealerHoleHidden = false;
         finished = false;
         outcome = null;
 
@@ -46,22 +37,16 @@ public class Game {
         dealer.takeCard(deck);
         player.takeCard(deck);
         dealer.takeCard(deck);
-        dealerHoleHidden = true;
 
         // проверяем блэкджеки
         Outcome early = OutcomeResolver.resolveAfterInitialDeal(player.getHand(),
                 dealer.getHand());
         if (early != null) {
             finished = true;
-            dealerHoleHidden = false; //открываем для UI
             outcome = early;
         }
     }
 
-    /**
-     * Обрабатывает действие игрока «взять карту».
-     * Проверяет перебор.
-     */
     public void playerHit() {
         if (finished) {
             return;
@@ -69,27 +54,18 @@ public class Game {
         player.takeCard(deck);
         if (player.getHand().isBust()) {
             finished = true;
-            dealerHoleHidden = false;
             outcome = Outcome.PLAYER_BUST;
         }
     }
 
-    /**
-     * Обрабатывает действие игрока «остановиться».
-     * Дилер доигрывает до 17 и определяется исход раунда.
-     */
     public void playerStand() {
         if (finished) {
             return;
         }
-        dealerHoleHidden = false;
         dealer.play(deck);
         determineOutcome();
     }
 
-    /**
-     * Определяет итог раунда, сравнивая руки игрока и дилера.
-     */
     private void determineOutcome() {
         int playerValue = player.getHand().getValue();
         int dealerValue = dealer.getHand().getValue();
@@ -107,18 +83,10 @@ public class Game {
         finished = true;
     }
 
-    // =========ГЕТЕРЫ========= //
-
-    /**
-     * Возвращает итог текущего раунда.
-     */
     public Outcome getOutcome() {
         return outcome;
     }
 
-    /**
-     * Возвращают игрока и дилера.
-     */
     public Participant getPlayer() {
         return player;
     }
@@ -127,9 +95,6 @@ public class Game {
         return dealer;
     }
 
-    /**
-     * Проверяет, завершён ли раунд.
-     */
     public boolean isFinished() {
         return finished;
     }

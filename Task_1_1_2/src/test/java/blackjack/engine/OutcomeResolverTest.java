@@ -3,8 +3,8 @@ package blackjack.engine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import blackjack.units.Card;
-import blackjack.units.Hand;
+import blackjack.models.Card;
+import blackjack.models.Hand;
 import org.junit.jupiter.api.Test;
 
 
@@ -40,7 +40,7 @@ class OutcomeResolverTest {
         Hand d3 = new Hand();
         d3.addCard(new Card(id(2, 8)));
         d3.addCard(new Card(id(3, 12)));
-        assertEquals(Game.Outcome.PUSH,
+        assertEquals(Game.Outcome.BOTH_BLACKJACK,
                 OutcomeResolver.resolveAfterInitialDeal(p3, d3));
 
         Hand p4 = new Hand();
