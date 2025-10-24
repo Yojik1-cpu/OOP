@@ -77,8 +77,6 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">OutcomeResolver</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Вспомогательный класс для определения исхода раунда.
- Проверяет блэкджек после раздачи и определяет победителя в финале.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -94,18 +92,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#resolveAfterInitialDeal(blackjack.units.Hand,blackjack.units.Hand)" class="member-name-link">resolveAfterInitialDeal</a><wbr>(<a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;player,
- <a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;dealer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Определяет исход после начальной раздачи:
- проверяет наличие блэкджека у игрока и дилера.</div>
-</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#resolveAfterInitialDeal(blackjack.models.Hand,blackjack.models.Hand)" class="member-name-link">resolveAfterInitialDeal</a><wbr>(<a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;player,
+ <a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;dealer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#resolveFinal(blackjack.units.Hand,blackjack.units.Hand)" class="member-name-link">resolveFinal</a><wbr>(<a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;player,
- <a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;dealer)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Определяет остальные возможные исходы.</div>
-</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#resolveFinal(blackjack.models.Hand,blackjack.models.Hand)" class="member-name-link">resolveFinal</a><wbr>(<a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;player,
+ <a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;dealer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -124,20 +117,17 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="resolveAfterInitialDeal(blackjack.units.Hand,blackjack.units.Hand)">
+<section class="detail" id="resolveAfterInitialDeal(blackjack.models.Hand,blackjack.models.Hand)">
 <h3>resolveAfterInitialDeal</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></span>&nbsp;<span class="element-name">resolveAfterInitialDeal</span><wbr><span class="parameters">(<a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;player,
- <a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;dealer)</span></div>
-<div class="block">Определяет исход после начальной раздачи:
- проверяет наличие блэкджека у игрока и дилера.</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></span>&nbsp;<span class="element-name">resolveAfterInitialDeal</span><wbr><span class="parameters">(<a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;player,
+ <a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;dealer)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="resolveFinal(blackjack.units.Hand,blackjack.units.Hand)">
+<section class="detail" id="resolveFinal(blackjack.models.Hand,blackjack.models.Hand)">
 <h3>resolveFinal</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></span>&nbsp;<span class="element-name">resolveFinal</span><wbr><span class="parameters">(<a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;player,
- <a href="../units/Hand.html" title="class in blackjack.units">Hand</a>&nbsp;dealer)</span></div>
-<div class="block">Определяет остальные возможные исходы.</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Game.Outcome.html" title="enum class in blackjack.engine">Game.Outcome</a></span>&nbsp;<span class="element-name">resolveFinal</span><wbr><span class="parameters">(<a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;player,
+ <a href="../models/Hand.html" title="class in blackjack.models">Hand</a>&nbsp;dealer)</span></div>
 </section>
 </li>
 </ul>

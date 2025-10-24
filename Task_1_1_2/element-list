@@ -1,3 +1,4 @@
 blackjack
 blackjack.engine
-blackjack.units
+blackjack.models
+blackjack.UiIo
