@@ -1,10 +1,10 @@
 package graph.core;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import graph.simple.AdjacencyListGraph;
 import graph.simple.AdjacencyMatrixGraph;
@@ -46,9 +46,9 @@ class GraphTest {
     @Test
     void testAllImplementationsSupportAddVertex() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
@@ -62,9 +62,9 @@ class GraphTest {
     @Test
     void testAllImplementationsRejectNullVertex() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
@@ -77,9 +77,9 @@ class GraphTest {
     @Test
     void testAllImplementationsSupportRemoveVertex() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
@@ -100,7 +100,7 @@ class GraphTest {
     void testAllImplementationsSupportAddEdge() {
         // directed
         Graph<String>[] directedGraphs = new Graph[]{
-                directedListGraph, directedMatrixGraph, directedIncidenceGraph
+            directedListGraph, directedMatrixGraph, directedIncidenceGraph
         };
 
         for (Graph<String> graph : directedGraphs) {
@@ -112,7 +112,7 @@ class GraphTest {
 
         // undirected
         Graph<String>[] undirectedGraphs = new Graph[]{
-                undirectedListGraph, undirectedMatrixGraph, undirectedIncidenceGraph
+            undirectedListGraph, undirectedMatrixGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : undirectedGraphs) {
@@ -127,18 +127,16 @@ class GraphTest {
     @Test
     void testAllImplementationsRejectNullEdge() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
-            assertThrows(NullPointerException.class, () -> {
-                graph.addEdge(null, "B");
-            });
-            assertThrows(NullPointerException.class, () -> {
-                graph.addEdge("A", null);
-            });
+            assertThrows(NullPointerException.class, () ->
+                    graph.addEdge(null, "B"));
+            assertThrows(NullPointerException.class, () ->
+                    graph.addEdge("A", null));
         }
     }
 
@@ -146,7 +144,7 @@ class GraphTest {
     void testAllImplementationsSupportRemoveEdge() {
         // directed
         Graph<String>[] directedGraphs = new Graph[]{
-                directedListGraph, directedMatrixGraph, directedIncidenceGraph
+            directedListGraph, directedMatrixGraph, directedIncidenceGraph
         };
 
         for (Graph<String> graph : directedGraphs) {
@@ -162,7 +160,7 @@ class GraphTest {
 
         // undirected
         Graph<String>[] undirectedGraphs = new Graph[]{
-                undirectedListGraph, undirectedMatrixGraph, undirectedIncidenceGraph
+            undirectedListGraph, undirectedMatrixGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : undirectedGraphs) {
@@ -180,9 +178,9 @@ class GraphTest {
     @Test
     void testAllImplementationsReturnEmptyVerticesForNewGraph() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
@@ -194,7 +192,7 @@ class GraphTest {
     void testAllImplementationsSupportNeighbors() {
         // directed
         Graph<String>[] directedGraphs = new Graph[]{
-                directedListGraph, directedMatrixGraph, directedIncidenceGraph
+            directedListGraph, directedMatrixGraph, directedIncidenceGraph
         };
 
         for (Graph<String> graph : directedGraphs) {
@@ -210,7 +208,7 @@ class GraphTest {
 
         // undirected
         Graph<String>[] undirectedGraphs = new Graph[]{
-                undirectedListGraph, undirectedMatrixGraph, undirectedIncidenceGraph
+            undirectedListGraph, undirectedMatrixGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : undirectedGraphs) {
@@ -227,9 +225,9 @@ class GraphTest {
     @Test
     void testAllImplementationsSupportEqualsAndHashCode() {
         Graph<String>[] allGraphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (int i = 0; i < allGraphs.length; i++) {
@@ -249,7 +247,7 @@ class GraphTest {
     @Test
     void testAllImplementationsHandleComplexGraphStructure() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, directedMatrixGraph, directedIncidenceGraph
+            directedListGraph, directedMatrixGraph, directedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
@@ -277,9 +275,9 @@ class GraphTest {
     @Test
     void testAllImplementationsSupportSelfLoops() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
@@ -291,9 +289,9 @@ class GraphTest {
     @Test
     void testAllImplementationsPreventDuplicateEdges() {
         Graph<String>[] graphs = new Graph[]{
-                directedListGraph, undirectedListGraph,
-                directedMatrixGraph, undirectedMatrixGraph,
-                directedIncidenceGraph, undirectedIncidenceGraph
+            directedListGraph, undirectedListGraph,
+            directedMatrixGraph, undirectedMatrixGraph,
+            directedIncidenceGraph, undirectedIncidenceGraph
         };
 
         for (Graph<String> graph : graphs) {
