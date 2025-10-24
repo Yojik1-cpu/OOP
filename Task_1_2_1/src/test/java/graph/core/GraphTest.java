@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import graph.simple.AdjacencyListGraph;
 import graph.simple.AdjacencyMatrixGraph;
 import graph.simple.IncidenceMatrixGraph;
-import java.util.Set;
 import java.util.Collections;
+import java.util.Set;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 class GraphTest {
 

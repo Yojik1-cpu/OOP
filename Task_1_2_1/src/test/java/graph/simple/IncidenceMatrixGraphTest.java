@@ -1,17 +1,16 @@
 package graph.simple;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-
-import java.util.Set;
 import java.util.Collections;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class IncidenceMatrixGraphTest {
 
@@ -40,9 +39,8 @@ class IncidenceMatrixGraphTest {
 
     @Test
     void testAddVertexNull() {
-        assertThrows(NullPointerException.class, () -> {
-            directedGraph.addVertex(null);
-        });
+        assertThrows(NullPointerException.class, () ->
+                directedGraph.addVertex(null));
     }
 
     @Test
@@ -93,12 +91,10 @@ class IncidenceMatrixGraphTest {
 
     @Test
     void testAddEdgeNull() {
-        assertThrows(NullPointerException.class, () -> {
-            directedGraph.addEdge(null, "B");
-        });
-        assertThrows(NullPointerException.class, () -> {
-            directedGraph.addEdge("A", null);
-        });
+        assertThrows(NullPointerException.class, () ->
+                directedGraph.addEdge(null, "B"));
+        assertThrows(NullPointerException.class, () ->
+                directedGraph.addEdge("A", null));
     }
 
     @Test
