@@ -1,8 +1,15 @@
 package graph.simple;
 
 import graph.core.Graph;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class AdjacencyMatrixGraph<V> implements Graph<V> {
     private final boolean directed;
@@ -108,5 +115,54 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
             }
         }
         return res;
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        AdjacencyMatrixGraph<?> that = (AdjacencyMatrixGraph<?>) obj;
+        return directed == that.directed
+                && index.equals(that.index)
+                && Arrays.deepEquals(matrix, that.matrix);
+    }
+
+    public int hashCode() {
+        int result = Objects.hash(directed, index);
+        result = 31 * result + Arrays.deepHashCode(matrix);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("AdjacencyMatrixGraph {")
+                .append("directed=").append(directed)
+                .append(", vertices=").append(index)
+                .append(", matrix=\n");
+
+        sb.append("    ");
+        for (V vertex : index) {
+            sb.append(String.format("%-4s", vertex));
+        }
+        sb.append("\n");
+
+        for (int i = 0; i < index.size(); i++) {
+            sb.append(String.format("%-4s", index.get(i)));
+            for (int j = 0; j < index.size(); j++) {
+                if (matrix[i][j]) {
+                    sb.append("1   ");
+                } else {
+                    sb.append("0   ");
+                }
+            }
+            sb.append("\n");
+        }
+        sb.append("}");
+
+        return sb.toString();
     }
 }

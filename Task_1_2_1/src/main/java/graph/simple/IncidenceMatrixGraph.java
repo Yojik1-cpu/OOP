@@ -1,16 +1,21 @@
 package graph.simple;
 
 import graph.core.Graph;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class IncidenceMatrixGraph<V> implements Graph<V> {
     private final boolean directed;
     private final List<V> index = new ArrayList<>();
     private final Map<V, Integer> pos = new HashMap<>();
-
     private final List<int[]> edges = new ArrayList<>();
-    private int[][] matrix = new int[0][0];
 
     public IncidenceMatrixGraph(boolean directed) {
         this.directed = directed;
@@ -111,10 +116,10 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
     }
 
     private void rebuildMatrix() {
-        int nV = index.size();
-        int nE = edges.size();
-        matrix = new int[nV][nE];
-        for (int e = 0; e < nE; e++) {
+        int vrt = index.size();
+        int edg = edges.size();
+        int[][] matrix = new int[vrt][edg];
+        for (int e = 0; e < edg; e++) {
             int u = edges.get(e)[0];
             int v = edges.get(e)[1];
             if (directed) {
@@ -125,5 +130,61 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
                 matrix[v][e] = 1;
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        IncidenceMatrixGraph<?> that = (IncidenceMatrixGraph<?>) obj;
+        if (directed != that.directed || !index.equals(that.index)) {
+            return false;
+        }
+        if (edges.size() != that.edges.size()) {
+            return false;
+        }
+        for (int i = 0; i < edges.size(); i++) {
+            if (!Arrays.equals(edges.get(i), that.edges.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(directed, index);
+        for (int[] edge : edges) {
+            result = 31 * result + Arrays.hashCode(edge);
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("IncidenceMatrixGraph {")
+            .append("directed=").append(directed)
+            .append(", vertices=").append(index)
+            .append(", edges=[");
+
+        List<String> edgeStrings = new ArrayList<>();
+        for (int[] edge : edges) {
+            String from = index.get(edge[0]).toString();
+            String to = index.get(edge[1]).toString();
+            if (directed) {
+                edgeStrings.add(from + " -> " + to);
+            } else {
+                edgeStrings.add(from + " -- " + to);
+            }
+        }
+        sb.append(String.join(", ", edgeStrings));
+        sb.append("]}");
+
+        return sb.toString();
     }
 }

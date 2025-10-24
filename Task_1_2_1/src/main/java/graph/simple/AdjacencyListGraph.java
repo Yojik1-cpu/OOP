@@ -1,9 +1,11 @@
 package graph.simple;
 
 import graph.core.Graph;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -67,5 +69,47 @@ public class AdjacencyListGraph<V> implements Graph<V> {
 
     public Set<V> neighbors(V v) {
         return adj.getOrDefault(v, Collections.emptySet());
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        AdjacencyListGraph<?> that = (AdjacencyListGraph<?>) obj;
+        return directed == that.directed && adj.equals(that.adj);
+    }
+
+    public int hashCode() {
+        return Objects.hash(directed, adj);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("AdjacencyListGraph {")
+            .append("directed=").append(directed)
+            .append(", vertices=").append(vertices())
+            .append(", edges=[");
+
+        // Формируем список рёбер в читаемом виде
+        List<String> edges = new ArrayList<>();
+        for (V from : vertices()) {
+            for (V to : neighbors(from)) {
+                if (directed || from.toString().compareTo(to.toString()) <= 0) {
+                    if (directed) {
+                        edges.add(from + " -> " + to);
+                    } else {
+                        edges.add(from + " -- " + to);
+                    }
+                }
+            }
+        }
+        sb.append(String.join(", ", edges));
+        sb.append("]}");
+
+        return sb.toString();
     }
 }

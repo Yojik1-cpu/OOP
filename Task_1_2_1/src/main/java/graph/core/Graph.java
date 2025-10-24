@@ -15,5 +15,14 @@ public interface Graph<V> {
 
     Set<V> vertices();
 
-    Set<V> neighbors(V v); // исходящие для орграфа; обычные для неориентированного
+    Set<V> neighbors(V v);
+
+    @Override
+    boolean equals(Object obj);
+
+    @Override
+    int hashCode();
+
+    @Override
+    String toString();
 }

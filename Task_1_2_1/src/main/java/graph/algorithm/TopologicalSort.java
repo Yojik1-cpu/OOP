@@ -12,7 +12,7 @@ public final class TopologicalSort {
 
     private TopologicalSort() {}
 
-    public static <V> List<V> kanh(Graph<V> g) {
+    public static <V> List<V> kahn(Graph<V> g) {
         if (!g.isDirected()) {
             throw new IllegalStateException("Topological sorting is defined "
                     + "only for directed graphs.");
@@ -50,7 +50,7 @@ public final class TopologicalSort {
         }
 
         if (order.size() != indeg.size()) {
-            throw new IllegalStateException("The graph contains a cycle — "
+            throw new IllegalStateException("The graph contains a cycle - "
                     + "topological sorting is not possible.");
         }
 
