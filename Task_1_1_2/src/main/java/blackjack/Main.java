@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.UiIo.I18n;
-import blackjack.UiIo.GameController;
+import blackjack.engine.GameController;
 
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;

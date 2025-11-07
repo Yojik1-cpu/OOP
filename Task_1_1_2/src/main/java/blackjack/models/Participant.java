@@ -3,16 +3,9 @@ package blackjack.models;
 import blackjack.engine.Deck;
 
 public class Participant {
-    private final String displayName;
     private final Hand hand = new Hand();
 
-    public Participant(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
+    public Participant() {}
 
     public void takeCard(Deck deck) {
         int id = deck.drawCard();
@@ -26,12 +19,5 @@ public class Participant {
 
     public void clearHand() {
         hand.clear();
-    }
-
-    @Override
-    public String toString() {
-        return displayName
-                + ": "
-                + hand;
     }
 }

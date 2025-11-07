@@ -8,7 +8,6 @@ import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
 
-
 public final class I18n {
 
     private I18n() {

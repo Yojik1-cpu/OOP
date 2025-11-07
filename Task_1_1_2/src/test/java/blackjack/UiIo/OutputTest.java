@@ -64,8 +64,8 @@ class OutputTest {
 
     @Test
     void printHands_showsPlayerAndDealer_withAndWithoutHole() {
-        Participant player = new Participant("Игрок");
-        Dealer dealer = new Dealer("Дилер");
+        Participant player = new Participant();
+        Dealer dealer = new Dealer();
 
         player.getHand().addCard(new Card(Suit.SPADES, Rank.ACE));
         player.getHand().addCard(new Card(Suit.HEARTS, Rank.TEN));

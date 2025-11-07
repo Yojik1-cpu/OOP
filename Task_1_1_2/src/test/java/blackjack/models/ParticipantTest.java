@@ -28,7 +28,7 @@ class ParticipantTest {
 
     @Test
     void takeCard_AddCard() {
-        Participant p = new Participant("Игрок");
+        Participant p = new Participant();
         Deck deck = new FakeDeck(id(0, 12));
 
         p.takeCard(deck);
@@ -41,12 +41,11 @@ class ParticipantTest {
         assertEquals(Rank.ACE, c.getRank());
         assertEquals("Туз Пики", I18n.Lang.RU.card(c));
         assertEquals("Ace Spades", I18n.Lang.EN.card(c));
-        assertEquals("Игрок", p.getDisplayName());
     }
 
     @Test
     void clearHand() {
-        Participant p = new Participant("X");
+        Participant p = new Participant();
         Deck deck = new FakeDeck(0, 1, 2);
 
         p.takeCard(deck);

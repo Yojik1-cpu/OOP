@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import blackjack.UiIo.I18n;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
@@ -56,5 +57,16 @@ class HandTest {
         assertTrue(h.getValue() > 21);
         h.clear();
         assertEquals(0, h.getCards().size());
+    }
+
+    @Test
+    void display_ShowsAceAsOne_WhenDowngraded() {
+        Hand h = new Hand();
+        h.addCard(new Card(id(0, 12)));
+        h.addCard(new Card(id(1, 7)));
+        h.addCard(new Card(id(2, 3)));
+
+        String s = h.toDisplayLocalized(I18n.Lang.RU);
+        assertTrue(s.contains("Туз") && s.contains("(1)"));
     }
 }

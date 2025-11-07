@@ -27,7 +27,7 @@ class DealerTest {
 
     @Test
     void play_HitsTo17() {
-        Dealer d = new Dealer("Дилер");
+        Dealer d = new Dealer();
         // стартовая рука 6 + 5 = 11; колода выдаст 6, потом Даму => итог >= 17
         d.getHand().addCard(new Card(id(0, 4))); // 6
         d.getHand().addCard(new Card(id(1, 3))); // 5

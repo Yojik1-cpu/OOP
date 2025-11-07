@@ -2,7 +2,7 @@ package blackjack.UiIo;
 
 import java.util.Scanner;
 
-public class Input {
+public class Input implements AutoCloseable {
     private final Scanner scanner;
     private final Output output;
 

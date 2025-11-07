@@ -1,6 +1,8 @@
-package blackjack.UiIo;
+package blackjack.engine;
 
-import blackjack.engine.Game;
+import blackjack.UiIo.I18n;
+import blackjack.UiIo.Input;
+import blackjack.UiIo.Output;
 
 public class GameController {
     private final Game game;
@@ -16,7 +18,7 @@ public class GameController {
     }
 
     public void run() {
-        try {
+        try (Input input = this.input) {
             output.printAskLang();
             String langChoice = input.readBinaryChoice();
             if (langChoice.equals("0")) {
@@ -43,11 +45,8 @@ public class GameController {
                     return;
                 }
             }
-        } finally {
-            if (input != null) {
-                input.close();
-            }
         }
+
     }
 
     private void applyOutcomeToScore(Game.Outcome o) {

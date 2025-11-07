@@ -1,8 +1,10 @@
-package blackjack.UiIo;
+package blackjack.engine;
 
-import blackjack.engine.Game;
 import blackjack.models.Dealer;
 import blackjack.models.Participant;
+import blackjack.UiIo.I18n;
+import blackjack.UiIo.Input;
+import blackjack.UiIo.Output;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -69,8 +71,8 @@ class GameControllerTest {
     }
 
     static class FakeGame extends Game {
-        private final Participant player = new Participant("Игрок");
-        private final Dealer dealer = new Dealer("Дилер");
+        private final Participant player = new Participant();
+        private final Dealer dealer = new Dealer();
         private boolean finished = true;
         private Outcome outcome = Outcome.PLAYER_WIN;
 

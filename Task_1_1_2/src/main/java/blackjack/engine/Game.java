@@ -16,8 +16,8 @@ public class Game {
     }
 
     private final Deck deck = new Deck();
-    private final Participant player = new Participant("Игрок");
-    private final Dealer dealer = new Dealer("Дилер");
+    private final Participant player = new Participant();
+    private final Dealer dealer = new Dealer();
 
 
     private boolean finished = false;
