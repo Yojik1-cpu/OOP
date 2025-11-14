@@ -2,8 +2,8 @@ package hashtable;
 
 import java.util.AbstractMap;
 import java.util.ConcurrentModificationException;
-import java.util.Map.Entry;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 public class HashTable<K, V> implements Iterable<Entry<K, V>> {
@@ -203,7 +203,9 @@ public class HashTable<K, V> implements Iterable<Entry<K, V>> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
