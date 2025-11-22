@@ -34,7 +34,7 @@ class ParserTest {
     @Test
     void parseVariableMultiLetterWithDigits() throws ParseException {
         Expression expr = Parser.parse("longName_123456789");
-        assertEquals(5.0, expr.eval("longName_123456789 = 5; x = 10"), 1e-9);
+        assertEquals(5.0, expr.eval("longName_123456789 = 5; x = 10"));
     }
 
     @Test
