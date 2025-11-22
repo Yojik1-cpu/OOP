@@ -1,6 +1,7 @@
 package expressions.binary;
 
 import expressions.Expression;
+import expressions.exceptions.DivisionByZeroException;
 
 public class Div extends Expression {
     private final Expression right;
@@ -12,7 +13,14 @@ public class Div extends Expression {
     }
 
     public double eval(String variables) {
-        return left.eval(variables) / right.eval(variables);
+        double denominator = right.eval(variables);
+
+        if (denominator == 0.0) {
+            throw new DivisionByZeroException("Division by zero");
+        }
+
+        double numerator = left.eval(variables);
+        return numerator / denominator;
     }
 
     public Expression derivative(String variable) {

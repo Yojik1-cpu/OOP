@@ -1,23 +1,47 @@
 import expressions.Expression;
-import expressions.atomic.Number;
-import expressions.atomic.Variable;
-import expressions.binary.Add;
-import expressions.binary.Div;
-import expressions.binary.Mul;
-import expressions.binary.Sub;
+import expressions.Parser;
+import expressions.exceptions.ParseException;
+
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Expression e = new Div(
-                new Add(new Number(3), new Mul(
-                                                new Number(2), new Variable("x"))),
-                new Sub(new Number(25), new Mul(
-                                                new Variable("x"), new Variable("x"))));
-        double result = e.eval("x = 10; y = 13");
-        System.out.println(result);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter an expression: ");
+        String exprString = scanner.nextLine().trim();
+
+        Expression e;
+        try {
+            e = Parser.parse(exprString);
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        String vars;
+        double result;
+
+        while (true) {
+            System.out.println("Enter variable assignments in the format: x = 10; y = 13");
+            vars = scanner.nextLine().trim();
+
+            try {
+                result = e.eval(vars);
+                break;
+            } catch (Exception ex) {
+                System.out.println("Error while evaluating expression: " + ex.getMessage());
+                System.out.println("Please try again.\n");
+            }
+        }
+
+        System.out.println("Value of the expression: " + result);
+        System.out.print("Expression: ");
         e.print();
 
-        Expression de = e.derivative("x");
+        System.out.println("Enter the variable to differentiate with respect to (e.g., x):");
+        String varToDiff = scanner.nextLine().trim();
+
+        Expression de = e.derivative(varToDiff);
+        System.out.print("Derivative with respect to " + varToDiff + ": ");
         de.print();
     }
 }
