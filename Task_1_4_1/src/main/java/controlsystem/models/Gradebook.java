@@ -1,14 +1,13 @@
 package controlsystem.models;
 
-
+import controlsystem.enums.ControlType;
+import controlsystem.enums.Grade;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import controlsystem.enums.ControlType;
-import controlsystem.enums.Grade;
 
 public class Gradebook {
     private final List<GradeRecord> records = new ArrayList<>();
@@ -27,7 +26,9 @@ public class Gradebook {
                 .filter(r -> r.getGrade().isNumeric())
                 .toList();
 
-        if (numeric.isEmpty()) return 0.0;
+        if (numeric.isEmpty()) {
+            return 0.0;
+        }
 
         int sum = numeric.stream()
                 .mapToInt(r -> r.getGrade().getNumeric())
@@ -58,7 +59,9 @@ public class Gradebook {
                 .filter(GradeRecord::isFinalForSubject)
                 .anyMatch(r -> r.getGrade() == Grade.SATISFACTORY
                         || r.getGrade() == Grade.UNSATISFACTORY);
-        if (hasBadFinals) return false;
+        if (hasBadFinals) {
+            return false;
+        }
 
         Optional<GradeRecord> thesis = records.stream()
                 .filter(r -> r.getControlType() == ControlType.THESIS_DEFENCE)
@@ -113,12 +116,15 @@ public class Gradebook {
 
     public boolean hasGoodLastTwoSessions() {
         int lastSemester = getMaxSemesterWithExams();
-        if (lastSemester == 0) return false;
+        if (lastSemester == 0) {
+            return false;
+        }
 
         int prevSemester = lastSemester - 1;
 
         return noBadExamsInSemester(lastSemester)
-                && (prevSemester <= 0 || noBadExamsInSemester(prevSemester));
+                && (prevSemester <= 0
+                || noBadExamsInSemester(prevSemester));
     }
 
     private boolean noBadExamsInSemester(int sem) {
