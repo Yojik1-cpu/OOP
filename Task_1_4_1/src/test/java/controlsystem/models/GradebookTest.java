@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import controlsystem.enums.ControlType;
 import controlsystem.enums.Grade;
 import java.util.List;
@@ -23,8 +24,10 @@ class GradebookTest {
     @Test
     void currentGpa_IgnoresNonNumericGrades() {
         Gradebook gb = new Gradebook();
-        gb.addRecord(new GradeRecord("Зачётка", 1, ControlType.CREDIT, Grade.PASS, true));
-        gb.addRecord(new GradeRecord("Практика", 1, ControlType.PRACTICE_DEFENCE, Grade.PASS, true));
+        gb.addRecord(new GradeRecord("Зачётка", 1,
+                ControlType.CREDIT, Grade.PASS, true));
+        gb.addRecord(new GradeRecord("Практика", 1,
+                ControlType.PRACTICE_DEFENCE, Grade.PASS, true));
 
         double gpa = gb.getCurrentGPA();
 

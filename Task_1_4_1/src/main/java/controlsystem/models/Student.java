@@ -1,4 +1,5 @@
 package controlsystem.models;
+
 import controlsystem.enums.EducationForm;
 
 public class Student {
