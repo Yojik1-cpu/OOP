@@ -15,7 +15,6 @@ public class Variable extends Expression {
         this.name = name;
     }
 
-    @Override
     public double eval(String variablesString) {
         Map<String, Double> vars = parseVariables(variablesString);
 
@@ -69,7 +68,6 @@ public class Variable extends Expression {
         return variables;
     }
 
-    @Override
     public Expression derivative(String variable) {
         return new Number(name.equals(variable) ? 1 : 0);
     }
