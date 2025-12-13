@@ -21,10 +21,12 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
         this.directed = directed;
     }
 
+    @Override
     public boolean isDirected() {
         return directed;
     }
 
+    @Override
     public boolean addVertex(V v) {
         Objects.requireNonNull(v);
         if (pos.containsKey(v)) {
@@ -41,6 +43,7 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
         return true;
     }
 
+    @Override
     public boolean removeVertex(V v) {
         Integer p = pos.remove(v);
         if (p == null) {
@@ -69,6 +72,7 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
         return true;
     }
 
+    @Override
     public boolean addEdge(V from, V to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
@@ -84,6 +88,7 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
         return ch;
     }
 
+    @Override
     public boolean removeEdge(V from, V to) {
         Integer i = pos.get(from);
         Integer j = pos.get(to);
@@ -99,10 +104,12 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
         return ch;
     }
 
+    @Override
     public Set<V> vertices() {
         return Collections.unmodifiableSet(new LinkedHashSet<>(index));
     }
 
+    @Override
     public Set<V> neighbors(V v) {
         Integer i = pos.get(v);
         if (i == null) {
@@ -117,23 +124,14 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
         return res;
     }
 
+    @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        AdjacencyMatrixGraph<?> that = (AdjacencyMatrixGraph<?>) obj;
-        return directed == that.directed
-                && index.equals(that.index)
-                && Arrays.deepEquals(matrix, that.matrix);
+        return graph.core.GraphUtil.graphEquals(this, obj);
     }
 
+    @Override
     public int hashCode() {
-        int result = Objects.hash(directed, index);
-        result = 31 * result + Arrays.deepHashCode(matrix);
-        return result;
+        return graph.core.GraphUtil.graphHash(this);
     }
 
     @Override

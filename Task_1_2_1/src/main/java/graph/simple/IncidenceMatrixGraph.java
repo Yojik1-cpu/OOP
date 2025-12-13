@@ -21,10 +21,12 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
         this.directed = directed;
     }
 
+    @Override
     public boolean isDirected() {
         return directed;
     }
 
+    @Override
     public boolean addVertex(V v) {
         Objects.requireNonNull(v);
         if (pos.containsKey(v)) {
@@ -36,6 +38,7 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
         return true;
     }
 
+    @Override
     public boolean removeVertex(V v) {
         Integer p = pos.remove(v);
         if (p == null) {
@@ -58,6 +61,7 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
         return true;
     }
 
+    @Override
     public boolean addEdge(V from, V to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
@@ -75,6 +79,7 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
         return true;
     }
 
+    @Override
     public boolean removeEdge(V from, V to) {
         Integer u = pos.get(from);
         Integer v = pos.get(to);
@@ -89,10 +94,12 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
         return removed;
     }
 
+    @Override
     public Set<V> vertices() {
         return Collections.unmodifiableSet(new LinkedHashSet<>(index));
     }
 
+    @Override
     public Set<V> neighbors(V v) {
         Integer p = pos.get(v);
         if (p == null) {
@@ -134,34 +141,12 @@ public class IncidenceMatrixGraph<V> implements Graph<V> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        IncidenceMatrixGraph<?> that = (IncidenceMatrixGraph<?>) obj;
-        if (directed != that.directed || !index.equals(that.index)) {
-            return false;
-        }
-        if (edges.size() != that.edges.size()) {
-            return false;
-        }
-        for (int i = 0; i < edges.size(); i++) {
-            if (!Arrays.equals(edges.get(i), that.edges.get(i))) {
-                return false;
-            }
-        }
-        return true;
+        return graph.core.GraphUtil.graphEquals(this, obj);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(directed, index);
-        for (int[] edge : edges) {
-            result = 31 * result + Arrays.hashCode(edge);
-        }
-        return result;
+        return graph.core.GraphUtil.graphHash(this);
     }
 
     @Override

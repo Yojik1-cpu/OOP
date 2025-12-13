@@ -17,12 +17,9 @@ public interface Graph<V> {
 
     Set<V> neighbors(V v);
 
-    @Override
     boolean equals(Object obj);
 
-    @Override
     int hashCode();
 
-    @Override
     String toString();
 }

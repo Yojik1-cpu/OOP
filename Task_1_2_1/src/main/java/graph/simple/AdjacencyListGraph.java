@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-
 public class AdjacencyListGraph<V> implements Graph<V> {
     private final boolean directed;
     private final Map<V, Set<V>> adj = new LinkedHashMap<>();
@@ -19,15 +18,18 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         this.directed = directed;
     }
 
+    @Override
     public boolean isDirected() {
         return directed;
     }
 
+    @Override
     public boolean addVertex(V v) {
         Objects.requireNonNull(v);
         return adj.putIfAbsent(v, new LinkedHashSet<>()) == null;
     }
 
+    @Override
     public boolean removeVertex(V v) {
         if (!adj.containsKey(v)) {
             return false;
@@ -39,7 +41,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         return true;
     }
 
-
+    @Override
     public boolean addEdge(V from, V to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
@@ -52,6 +54,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         return ch;
     }
 
+    @Override
     public boolean removeEdge(V from, V to) {
         if (!adj.containsKey(from) || !adj.containsKey(to)) {
             return false;
@@ -63,27 +66,24 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         return ch;
     }
 
+    @Override
     public Set<V> vertices() {
         return Collections.unmodifiableSet(adj.keySet());
     }
 
+    @Override
     public Set<V> neighbors(V v) {
         return adj.getOrDefault(v, Collections.emptySet());
     }
 
+    @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        AdjacencyListGraph<?> that = (AdjacencyListGraph<?>) obj;
-        return directed == that.directed && adj.equals(that.adj);
+        return graph.core.GraphUtil.graphEquals(this, obj);
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(directed, adj);
+        return graph.core.GraphUtil.graphHash(this);
     }
 
     @Override
