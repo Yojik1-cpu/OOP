@@ -223,26 +223,21 @@ class GraphTest {
     }
 
     @Test
-    void testAllImplementationsSupportEqualsAndHashCode() {
-        Graph<String>[] allGraphs = new Graph[]{
-            directedListGraph, undirectedListGraph,
-            directedMatrixGraph, undirectedMatrixGraph,
-            directedIncidenceGraph, undirectedIncidenceGraph
-        };
+    void sameDirGraphsAcrossImplementationsAreEqual() {
+        Graph<String> g1 = new AdjacencyListGraph<>(true);
+        Graph<String> g2 = new AdjacencyMatrixGraph<>(true);
+        Graph<String> g3 = new IncidenceMatrixGraph<>(true);
 
-        for (int i = 0; i < allGraphs.length; i++) {
-            for (int j = i + 1; j < allGraphs.length; j++) {
-                assertNotEquals(allGraphs[i], allGraphs[j]);
-            }
-        }
+        g1.addEdge("A", "B");
+        g2.addEdge("A", "B");
+        g3.addEdge("A", "B");
 
-        Graph<String> graph1 = new AdjacencyListGraph<>(true);
-        Graph<String> graph2 = new AdjacencyListGraph<>(true);
-        graph1.addEdge("A", "B");
-        graph2.addEdge("A", "B");
-        assertEquals(graph1, graph2);
-        assertEquals(graph1.hashCode(), graph2.hashCode());
+        assertEquals(g1, g2);
+        assertEquals(g2, g3);
+        assertEquals(g1.hashCode(), g2.hashCode());
+        assertEquals(g2.hashCode(), g3.hashCode());
     }
+
 
     @Test
     void testAllImplementationsHandleComplexGraphStructure() {
