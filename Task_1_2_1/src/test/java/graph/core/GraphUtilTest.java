@@ -1,9 +1,10 @@
 package graph.core;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import graph.simple.AdjacencyListGraph;
 import graph.simple.AdjacencyMatrixGraph;
 import graph.simple.IncidenceMatrixGraph;
@@ -13,9 +14,11 @@ class GraphUtilTest {
     private static Graph<String> list(boolean directed) {
         return new AdjacencyListGraph<>(directed);
     }
+
     private static Graph<String> adjMatrix(boolean directed) {
         return new AdjacencyMatrixGraph<>(directed);
     }
+
     private static Graph<String> incMatrix(boolean directed) {
         return new IncidenceMatrixGraph<>(directed);
     }
@@ -107,7 +110,6 @@ class GraphUtilTest {
 
         g1.addVertex("A");
         g1.addVertex("B");
-
         g2.addVertex("A");
         g2.addVertex("B");
         g2.addVertex("C");
@@ -120,8 +122,12 @@ class GraphUtilTest {
         Graph<String> g1 = list(false);
         Graph<String> g2 = incMatrix(false);
 
-        g1.addVertex("A"); g1.addVertex("B"); g1.addVertex("C");
-        g2.addVertex("A"); g2.addVertex("B"); g2.addVertex("C");
+        g1.addVertex("A");
+        g1.addVertex("B");
+        g1.addVertex("C");
+        g2.addVertex("A");
+        g2.addVertex("B");
+        g2.addVertex("C");
 
         g1.addEdge("A", "B");
         g2.addEdge("A", "C");

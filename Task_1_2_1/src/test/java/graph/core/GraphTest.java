@@ -11,8 +11,8 @@ import graph.simple.AdjacencyMatrixGraph;
 import graph.simple.IncidenceMatrixGraph;
 import java.util.Collections;
 import java.util.Set;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class GraphTest {
 
