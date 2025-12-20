@@ -1,9 +1,9 @@
 package graph.core;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import graph.simple.AdjacencyListGraph;
 import graph.simple.AdjacencyMatrixGraph;
 import graph.simple.IncidenceMatrixGraph;
@@ -105,7 +105,6 @@ class AbstractGraphTest {
     void notEqual_whenVertexSetsDiffer() {
         Graph<String> g1 = list(false);
         Graph<String> g2 = adjMatrix(false);
-
         g1.addVertex("A");
         g1.addVertex("B");
         g2.addVertex("A");
