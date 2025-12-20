@@ -1,16 +1,16 @@
 package graph.core;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import graph.simple.AdjacencyListGraph;
 import graph.simple.AdjacencyMatrixGraph;
 import graph.simple.IncidenceMatrixGraph;
 import org.junit.jupiter.api.Test;
 
-class GraphUtilTest {
+class AbstractGraphTest {
+
     private static Graph<String> list(boolean directed) {
         return new AdjacencyListGraph<>(directed);
     }
@@ -34,15 +34,13 @@ class GraphUtilTest {
         g.addEdge("B", "C");
     }
 
-    // ===========tests=============
-
     @Test
     void equals_isReflexive() {
         Graph<String> g = list(false);
         addUndirectedTriangle(g);
 
-        assertTrue(GraphUtil.graphEquals(g, g));
-        assertEquals(GraphUtil.graphHash(g), GraphUtil.graphHash(g));
+        assertEquals(g, g);
+        assertEquals(g.hashCode(), g.hashCode());
     }
 
     @Test
@@ -50,8 +48,8 @@ class GraphUtilTest {
         Graph<String> g = list(false);
         addUndirectedTriangle(g);
 
-        assertFalse(GraphUtil.graphEquals(g, null));
-        assertFalse(GraphUtil.graphEquals(g, "not a graph"));
+        assertNotEquals(null, g);
+        assertNotEquals("not a graph", g);
     }
 
     @Test
@@ -64,15 +62,15 @@ class GraphUtilTest {
         addUndirectedTriangle(g2);
         addUndirectedTriangle(g3);
 
-        assertTrue(GraphUtil.graphEquals(g1, g2));
-        assertTrue(GraphUtil.graphEquals(g2, g1));
-        assertTrue(GraphUtil.graphEquals(g1, g3));
-        assertTrue(GraphUtil.graphEquals(g3, g1));
-        assertTrue(GraphUtil.graphEquals(g2, g3));
-        assertTrue(GraphUtil.graphEquals(g3, g2));
+        assertEquals(g1, g2);
+        assertEquals(g2, g1);
+        assertEquals(g1, g3);
+        assertEquals(g3, g1);
+        assertEquals(g2, g3);
+        assertEquals(g3, g2);
 
-        assertEquals(GraphUtil.graphHash(g1), GraphUtil.graphHash(g2));
-        assertEquals(GraphUtil.graphHash(g1), GraphUtil.graphHash(g3));
+        assertEquals(g1.hashCode(), g2.hashCode());
+        assertEquals(g1.hashCode(), g3.hashCode());
     }
 
     @Test
@@ -85,10 +83,10 @@ class GraphUtilTest {
         addDirectedChain(g2);
         addDirectedChain(g3);
 
-        assertTrue(GraphUtil.graphEquals(g1, g2));
-        assertTrue(GraphUtil.graphEquals(g2, g3));
-        assertEquals(GraphUtil.graphHash(g1), GraphUtil.graphHash(g2));
-        assertEquals(GraphUtil.graphHash(g2), GraphUtil.graphHash(g3));
+        assertEquals(g1, g2);
+        assertEquals(g2, g3);
+        assertEquals(g1.hashCode(), g2.hashCode());
+        assertEquals(g2.hashCode(), g3.hashCode());
     }
 
     @Test
@@ -100,7 +98,7 @@ class GraphUtilTest {
         dir.addEdge("A", "B");
         dir.addEdge("B", "A");
 
-        assertFalse(GraphUtil.graphEquals(und, dir));
+        assertNotEquals(und, dir);
     }
 
     @Test
@@ -114,7 +112,7 @@ class GraphUtilTest {
         g2.addVertex("B");
         g2.addVertex("C");
 
-        assertFalse(GraphUtil.graphEquals(g1, g2));
+        assertNotEquals(g1, g2);
     }
 
     @Test
@@ -132,7 +130,7 @@ class GraphUtilTest {
         g1.addEdge("A", "B");
         g2.addEdge("A", "C");
 
-        assertFalse(GraphUtil.graphEquals(g1, g2));
+        assertNotEquals(g1, g2);
     }
 
     @Test
@@ -143,8 +141,8 @@ class GraphUtilTest {
         addUndirectedTriangle(g1);
         addUndirectedTriangle(g2);
 
-        boolean a = GraphUtil.graphEquals(g1, g2);
-        boolean b = GraphUtil.graphEquals(g2, g1);
+        boolean a = g1.equals(g2);
+        boolean b = g2.equals(g1);
 
         assertEquals(a, b);
         assertTrue(a);
@@ -155,10 +153,10 @@ class GraphUtilTest {
         Graph<String> g = list(false);
         g.addEdge("A", "B");
 
-        int h1 = GraphUtil.graphHash(g);
+        int h1 = g.hashCode();
 
         g.addEdge("B", "C");
-        int h2 = GraphUtil.graphHash(g);
+        int h2 = g.hashCode();
 
         assertNotEquals(h1, h2);
     }

@@ -1,8 +1,7 @@
 package graph.simple;
 
-import graph.core.Graph;
+import graph.core.AbstractGraph;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -11,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class AdjacencyMatrixGraph<V> implements Graph<V> {
+public class AdjacencyMatrixGraph<V> extends AbstractGraph<V> {
     private final boolean directed;
     private final List<V> index = new ArrayList<>();
     private final Map<V, Integer> pos = new HashMap<>();
@@ -122,16 +121,6 @@ public class AdjacencyMatrixGraph<V> implements Graph<V> {
             }
         }
         return res;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return graph.core.GraphUtil.graphEquals(this, obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return graph.core.GraphUtil.graphHash(this);
     }
 
     @Override

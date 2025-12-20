@@ -17,9 +17,5 @@ public interface Graph<V> {
 
     Set<V> neighbors(V v);
 
-    boolean equals(Object obj);
-
-    int hashCode();
-
     String toString();
 }
