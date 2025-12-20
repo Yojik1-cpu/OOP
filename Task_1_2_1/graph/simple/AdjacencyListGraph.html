@@ -71,7 +71,9 @@ loadScripts(document, 'script');</script>
 <h1 title="Class AdjacencyListGraph" class="title">Class AdjacencyListGraph&lt;V&gt;</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="../core/AbstractGraph.html" title="class in graph.core">graph.core.AbstractGraph</a>&lt;V&gt;
 <div class="inheritance">graph.simple.AdjacencyListGraph&lt;V&gt;</div>
+</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -80,8 +82,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AdjacencyListGraph&lt;V&gt;</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;V&gt;</span></div>
+<span class="extends-implements">extends <a href="../core/AbstractGraph.html" title="class in graph.core">AbstractGraph</a>&lt;V&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -117,12 +118,6 @@ implements <a href="../core/Graph.html" title="interface in graph.core">Graph</a
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addVertex(V)" class="member-name-link">addVertex</a><wbr>(<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;v)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDirected()" class="member-name-link">isDirected</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></div>
@@ -144,6 +139,9 @@ implements <a href="../core/Graph.html" title="interface in graph.core">Graph</a
 </div>
 </div>
 </div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-graph.core.AbstractGraph">Methods inherited from class&nbsp;graph.core.<a href="../core/AbstractGraph.html" title="class in graph.core">AbstractGraph</a></h3>
+<code><a href="../core/AbstractGraph.html#equals(java.lang.Object)">equals</a>, <a href="../core/AbstractGraph.html#hashCode()">hashCode</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -176,30 +174,18 @@ implements <a href="../core/Graph.html" title="interface in graph.core">Graph</a
 <section class="detail" id="isDirected()">
 <h3>isDirected</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDirected</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#isDirected()">isDirected</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="addVertex(V)">
 <h3 id="addVertex(java.lang.Object)">addVertex</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addVertex</span><wbr><span class="parameters">(<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;v)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#addVertex(V)">addVertex</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="removeVertex(V)">
 <h3 id="removeVertex(java.lang.Object)">removeVertex</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">removeVertex</span><wbr><span class="parameters">(<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;v)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#removeVertex(V)">removeVertex</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
 </section>
 </li>
 <li>
@@ -207,10 +193,6 @@ implements <a href="../core/Graph.html" title="interface in graph.core">Graph</a
 <h3 id="addEdge(java.lang.Object,java.lang.Object)">addEdge</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addEdge</span><wbr><span class="parameters">(<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;from,
  <a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;to)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#addEdge(V,V)">addEdge</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
 </section>
 </li>
 <li>
@@ -218,54 +200,18 @@ implements <a href="../core/Graph.html" title="interface in graph.core">Graph</a
 <h3 id="removeEdge(java.lang.Object,java.lang.Object)">removeEdge</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">removeEdge</span><wbr><span class="parameters">(<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;from,
  <a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;to)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#removeEdge(V,V)">removeEdge</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="vertices()">
 <h3>vertices</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</span>&nbsp;<span class="element-name">vertices</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#vertices()">vertices</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="neighbors(V)">
 <h3 id="neighbors(java.lang.Object)">neighbors</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</span>&nbsp;<span class="element-name">neighbors</span><wbr><span class="parameters">(<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&nbsp;v)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#neighbors(V)">neighbors</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="equals(java.lang.Object)">
-<h3>equals</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#equals(java.lang.Object)">equals</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-<dt>Overrides:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="hashCode()">
-<h3>hashCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../core/Graph.html#hashCode()">hashCode</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Graph.html" title="interface in graph.core">Graph</a>&lt;<a href="AdjacencyListGraph.html" title="type parameter in AdjacencyListGraph">V</a>&gt;</code></dd>
-<dt>Overrides:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
-</dl>
 </section>
 </li>
 <li>
