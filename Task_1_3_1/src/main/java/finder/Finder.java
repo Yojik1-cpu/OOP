@@ -16,8 +16,11 @@ public class Finder {
             return result;
         }
 
-        int patLen = pattern.length();
-        int chunkSize = Math.max(4096, patLen * 4);
+        int patCpLen = pattern.codePointCount(0, pattern.length());
+        if (patCpLen == 0) return result;
+
+        int patCharLen = pattern.length();
+        int chunkSize = Math.max(4096, patCharLen * 4);
 
         try (BufferedReader reader = Files.newBufferedReader(
                 Path.of(filename),
@@ -25,38 +28,55 @@ public class Finder {
         )) {
             char[] buffer = new char[chunkSize];
             String tail = "";
-            long offset = 0;
+            long offsetCp = 0;
+            char pendingHighSurrogate = 0;
 
             int read;
             while ((read = reader.read(buffer)) != -1) {
                 String chunk = new String(buffer, 0, read);
+
+                if (pendingHighSurrogate != 0) {
+                    chunk = pendingHighSurrogate + chunk;
+                    pendingHighSurrogate = 0;
+                }
+
+                if (!chunk.isEmpty() && Character.isHighSurrogate(chunk.charAt(chunk.length() - 1))) {
+                    pendingHighSurrogate = chunk.charAt(chunk.length() - 1);
+                    chunk = chunk.substring(0, chunk.length() - 1);
+                }
+
                 String text = tail + chunk;
+
+                int tailCp = tail.codePointCount(0, tail.length());
 
                 int fromIndex = 0;
                 while (true) {
                     int idx = text.indexOf(pattern, fromIndex);
-                    if (idx == -1) {
-                        break;
-                    }
+                    if (idx == -1) break;
 
-                    long globalIdx = offset - tail.length() + idx;
-                    if (globalIdx >= 0) {
-                        result.add(globalIdx);
+                    int idxCp = text.codePointCount(0, idx);
+                    long globalIdxCp = offsetCp - tailCp + idxCp;
+
+                    if (globalIdxCp >= 0) {
+                        result.add(globalIdxCp);
                     }
 
                     fromIndex = idx + 1;
                 }
 
-                if (patLen > 1) {
-                    int startTail = Math.max(0, text.length() - (patLen - 1));
-                    tail = text.substring(startTail);
+                if (patCpLen > 1) {
+                    int textCpLen = text.codePointCount(0, text.length());
+                    int keepCp = patCpLen - 1;
+                    int startCp = Math.max(0, textCpLen - keepCp);
+                    int startChar = text.offsetByCodePoints(0, startCp);
+                    tail = text.substring(startChar);
                 } else {
                     tail = "";
                 }
-
-                offset += read;
+                offsetCp += chunk.codePointCount(0, chunk.length());
             }
         }
+
         return result;
     }
 }
