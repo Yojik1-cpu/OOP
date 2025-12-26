@@ -1,6 +1,10 @@
 package finder;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
@@ -123,7 +127,7 @@ class FinderTest {
     }
 
     @Test
-    void findsPatternInSeveralGiBFile() throws IOException {
+    void findsPatternInSeveralGiBitesFile() throws IOException {
         Path file = tempDir.resolve("big.txt");
 
         long gib = 10;

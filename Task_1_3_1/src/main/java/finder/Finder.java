@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Finder {
-    public static List<Long> find(String filename, String pattern) throws IOException {
+    public static List<Long> find(String filename, final String pattern) throws IOException {
         List<Long> result = new ArrayList<>();
 
         if (pattern == null || pattern.isEmpty()) {
@@ -17,7 +17,9 @@ public class Finder {
         }
 
         int patCpLen = pattern.codePointCount(0, pattern.length());
-        if (patCpLen == 0) return result;
+        if (patCpLen == 0) {
+            return result;
+        }
 
         int patCharLen = pattern.length();
         int chunkSize = Math.max(4096, patCharLen * 4);
@@ -40,7 +42,8 @@ public class Finder {
                     pendingHighSurrogate = 0;
                 }
 
-                if (!chunk.isEmpty() && Character.isHighSurrogate(chunk.charAt(chunk.length() - 1))) {
+                if (!chunk.isEmpty() &&
+                        Character.isHighSurrogate(chunk.charAt(chunk.length() - 1))) {
                     pendingHighSurrogate = chunk.charAt(chunk.length() - 1);
                     chunk = chunk.substring(0, chunk.length() - 1);
                 }
@@ -52,7 +55,9 @@ public class Finder {
                 int fromIndex = 0;
                 while (true) {
                     int idx = text.indexOf(pattern, fromIndex);
-                    if (idx == -1) break;
+                    if (idx == -1) {
+                        break;
+                    }
 
                     int idxCp = text.codePointCount(0, idx);
                     long globalIdxCp = offsetCp - tailCp + idxCp;
