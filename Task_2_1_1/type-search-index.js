@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"Main"},{"p":"foundPrime","l":"ParallelStreamPrimeFinder"},{"p":"foundPrime","l":"PrimeFinder"},{"p":"foundPrime","l":"SequentialPrimeFinder"},{"p":"foundPrime","l":"ThreadPrimeFinder"}];updateSearchResults();
