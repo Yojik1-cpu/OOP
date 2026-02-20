@@ -47,20 +47,20 @@ class SequentialPrimeFinderTest {
 
     @Test
     void isPrime_negativeAndZeroAndOne_returnsFalse() {
-        assertFalse(SequentialPrimeFinder.isPrime(0));
-        assertFalse(SequentialPrimeFinder.isPrime(1));
-        assertFalse(SequentialPrimeFinder.isPrime(-7));
+        assertFalse(PrimeFinder.isPrime(0));
+        assertFalse(PrimeFinder.isPrime(1));
+        assertFalse(PrimeFinder.isPrime(-7));
     }
 
     @Test
     void isPrime_twoAndThree_returnsTrue() {
-        assertTrue(SequentialPrimeFinder.isPrime(2));
-        assertTrue(SequentialPrimeFinder.isPrime(3));
+        assertTrue(PrimeFinder.isPrime(2));
+        assertTrue(PrimeFinder.isPrime(3));
     }
 
     @Test
     void isPrime_largePrime_returnsTrue() {
-        assertTrue(SequentialPrimeFinder.isPrime(97));
-        assertTrue(SequentialPrimeFinder.isPrime(1000000007L));
+        assertTrue(PrimeFinder.isPrime(97));
+        assertTrue(PrimeFinder.isPrime(1000000007L));
     }
 }

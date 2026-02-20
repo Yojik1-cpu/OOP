@@ -27,7 +27,7 @@ public class ThreadPrimeFinder implements PrimeFinder {
             final int threadIndex = t;
             workers[t] = new Thread(() -> {
                 for (int i = threadIndex; i < n && !foundNonPrime.get(); i += threadsToUse) {
-                    if (!SequentialPrimeFinder.isPrime(numbers[i])) {
+                    if (!PrimeFinder.isPrime(numbers[i])) {
                         foundNonPrime.set(true);
                         return;
                     }
@@ -46,6 +46,30 @@ public class ThreadPrimeFinder implements PrimeFinder {
         }
 
         return foundNonPrime.get();
+    }
+
+    private static class MyAtomicInteger {
+        private int value;
+
+        public MyAtomicInteger(int initialValue) {
+            this.value = initialValue;
+        }
+
+        public synchronized int get() {
+            return value;
+        }
+
+        public synchronized void set(int newValue) {
+            this.value = newValue;
+        }
+
+        public synchronized boolean compareAndSet(int expectedValue, int newValue) {
+            if (this.value == expectedValue) {
+                this.value = newValue;
+                return true;
+            }
+            return false;
+        }
     }
 
     public int getThreadCount() {

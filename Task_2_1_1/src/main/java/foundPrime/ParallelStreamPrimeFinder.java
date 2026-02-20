@@ -11,6 +11,6 @@ public class ParallelStreamPrimeFinder implements PrimeFinder {
         }
         return Arrays.stream(numbers)
                 .parallel()
-                .anyMatch(n -> !SequentialPrimeFinder.isPrime(n));
+                .anyMatch(n -> !PrimeFinder.isPrime(n));
     }
 }
