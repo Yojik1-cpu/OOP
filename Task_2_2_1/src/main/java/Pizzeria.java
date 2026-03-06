@@ -45,7 +45,6 @@ public class Pizzeria {
             PizzaOrder order = new PizzaOrder(orderIdCounter++);
             orderQueue.add(order);
             order.setState(PizzaOrder.State.QUEUED);
-            System.out.println("Order " + order.getId() + " is queued");
             Thread.sleep(500); 
         }
 

@@ -15,7 +15,6 @@ public class Warehouse {
         queue.add(order);
         if (order != null) {
             order.setState(PizzaOrder.State.WAREHOUSE);
-            System.out.println("Order " + order.getId() + " stored in warehouse");
         }
     }
 

@@ -28,14 +28,12 @@ public class Courier implements Runnable {
                     continue;
                 }
                 currentOrders = orders;
-                System.out.println("Courier " + id + " took " + orders.size() + " pizzas");
                 for (PizzaOrder order : orders) {
                     order.setState(PizzaOrder.State.DELIVERING);
                 }
                 Thread.sleep(1000);
                 for (PizzaOrder order : orders) {
                     order.setState(PizzaOrder.State.DELIVERED);
-                    System.out.println("Courier " + id + " delivered order " + order.getId());
                 }
                 currentOrders = null;
             } catch (InterruptedException e) {

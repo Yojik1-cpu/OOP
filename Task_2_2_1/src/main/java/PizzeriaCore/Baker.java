@@ -26,7 +26,6 @@ public class Baker implements Runnable {
                 }
                 currentOrder = order;
                 order.setState(PizzaOrder.State.COOKING);
-                System.out.println("Baker " + id + " is cooking order " + order.getId());
                 Thread.sleep(cookingTime);
                 warehouse.placeOrder(order);
                 currentOrder = null;
