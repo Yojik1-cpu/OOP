@@ -1,0 +1,13 @@
+package PizzeriaConfig;
+
+public class BakerConfig {
+    private int cookingTime;
+
+    public BakerConfig(int cookingTime) {
+        this.cookingTime = cookingTime;
+    }
+
+    public int getCookingTime() {
+        return cookingTime;
+    }
+}
