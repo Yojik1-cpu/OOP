@@ -6,15 +6,18 @@ import java.util.List;
 
 public class Warehouse {
     private final SharedQueue<PizzaOrder> queue;
+    private final OrderLogger logger;
 
-    public Warehouse(int capacity) {
+    public Warehouse(int capacity, OrderLogger logger) {
         this.queue = new SharedQueue<>(capacity);
+        this.logger = logger;
     }
 
     public void placeOrder(PizzaOrder order) throws InterruptedException {
         queue.add(order);
         if (order != null) {
             order.setState(PizzaOrder.State.WAREHOUSE);
+            logger.log(order);
         }
     }
 

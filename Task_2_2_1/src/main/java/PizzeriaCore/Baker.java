@@ -5,14 +5,16 @@ public class Baker implements Runnable {
     private final int cookingTime;
     private final SharedQueue<PizzaOrder> orderQueue;
     private final Warehouse warehouse;
+    private final OrderLogger logger;
     private volatile boolean running = true;
     private volatile PizzaOrder currentOrder;
 
-    public Baker(int id, int cookingTime, SharedQueue<PizzaOrder> orderQueue, Warehouse warehouse) {
+    public Baker(int id, int cookingTime, SharedQueue<PizzaOrder> orderQueue, Warehouse warehouse, OrderLogger logger) {
         this.id = id;
         this.cookingTime = cookingTime;
         this.orderQueue = orderQueue;
         this.warehouse = warehouse;
+        this.logger = logger;
     }
 
     @Override
@@ -26,6 +28,7 @@ public class Baker implements Runnable {
                 }
                 currentOrder = order;
                 order.setState(PizzaOrder.State.COOKING);
+                logger.log(order);
                 Thread.sleep(cookingTime);
                 warehouse.placeOrder(order);
                 currentOrder = null;

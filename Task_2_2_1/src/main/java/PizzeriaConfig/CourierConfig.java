@@ -1,7 +1,7 @@
 package PizzeriaConfig;
 
 public class CourierConfig {
-    private int trunkCapacity;
+    private final int trunkCapacity;
 
     public CourierConfig(int trunkCapacity) {
         this.trunkCapacity = trunkCapacity;

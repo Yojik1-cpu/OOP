@@ -3,13 +3,14 @@ package PizzeriaConfig;
 import java.util.List;
 
 public class PizzeriaConfiguration {
-    private List<BakerConfig> bakers;
-    private List<CourierConfig> couriers;
-    private int warehouseCapacity;
-    private long newOrdersDeadline;
-    private long shutdownDeadline;
+    private final List<BakerConfig> bakers;
+    private final List<CourierConfig> couriers;
+    private final int warehouseCapacity;
+    private final long newOrdersDeadline;
+    private final long shutdownDeadline;
 
-    public PizzeriaConfiguration(List<BakerConfig> bakers, List<CourierConfig> couriers, int warehouseCapacity, long newOrdersDeadline, long shutdownDeadline) {
+    public PizzeriaConfiguration(List<BakerConfig> bakers, List<CourierConfig> couriers, int warehouseCapacity,
+                                 long newOrdersDeadline, long shutdownDeadline) {
         this.bakers = bakers;
         this.couriers = couriers;
         this.warehouseCapacity = warehouseCapacity;

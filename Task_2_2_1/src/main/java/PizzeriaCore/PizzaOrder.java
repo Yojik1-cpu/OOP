@@ -21,7 +21,6 @@ public class PizzaOrder implements Serializable {
 
     public void setState(State state) {
         this.state = state;
-        System.out.println("[" + id + "] " + state);
     }
 
     public enum State {

@@ -1,7 +1,7 @@
 package PizzeriaConfig;
 
 public class BakerConfig {
-    private int cookingTime;
+    private final int cookingTime;
 
     public BakerConfig(int cookingTime) {
         this.cookingTime = cookingTime;
