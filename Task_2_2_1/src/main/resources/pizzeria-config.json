@@ -1,0 +1,14 @@
+{
+  "bakers": [
+    { "cookingTime": 1000 },
+    { "cookingTime": 1200 },
+    { "cookingTime": 800 }
+  ],
+  "couriers": [
+    { "trunkCapacity": 2 },
+    { "trunkCapacity": 3 }
+  ],
+  "warehouseCapacity": 5,
+  "newOrdersDeadline": 10000,
+  "shutdownDeadline": 20000
+}

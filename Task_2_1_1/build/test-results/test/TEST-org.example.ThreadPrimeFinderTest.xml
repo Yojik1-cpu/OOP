@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.ThreadPrimeFinderTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-02-13T06:00:36.214Z" hostname="DESKTOP-35F0QE2" time="0.083">
+  <properties/>
+  <testcase name="hasNonPrime_emptyArray_returnsFalse()" classname="org.example.ThreadPrimeFinderTest" time="0.039"/>
+  <testcase name="singleThread_sameResultAsSequential()" classname="org.example.ThreadPrimeFinderTest" time="0.013"/>
+  <testcase name="hasNonPrime_null_returnsFalse()" classname="org.example.ThreadPrimeFinderTest" time="0.001"/>
+  <testcase name="constructor_throwsWhenThreadCountLessThanOne()" classname="org.example.ThreadPrimeFinderTest" time="0.005"/>
+  <testcase name="hasNonPrime_whenAllPrimes_returnsFalse()" classname="org.example.ThreadPrimeFinderTest" time="0.005"/>
+  <testcase name="hasNonPrime_whenArrayContainsNonPrime_returnsTrue()" classname="org.example.ThreadPrimeFinderTest" time="0.004"/>
+  <testcase name="getThreadCount_returnsConfiguredValue()" classname="org.example.ThreadPrimeFinderTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

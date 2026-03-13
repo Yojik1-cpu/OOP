@@ -1,0 +1,57 @@
+@startuml
+
+' Class declarations
+class Pizzeria
+class PizzeriaCore.BackupManager
+class PizzeriaCore.OrderLogger
+class PizzeriaCore.Courier
+class PizzeriaCore.PizzaOrder
+enum PizzeriaCore.State
+class PizzeriaCore.Baker
+class PizzeriaCore.Warehouse
+class PizzeriaCore.SharedQueue
+class PizzeriaConfig.BakerConfig
+class PizzeriaConfig.PizzeriaConfiguration
+class PizzeriaConfig.ConfigurationLoader
+class PizzeriaConfig.CourierConfig
+
+' Inheritance / Implementation
+java.lang.Runnable <|.. PizzeriaCore.Baker
+java.lang.Runnable <|.. PizzeriaCore.Courier
+java.io.Serializable <|.. PizzeriaCore.PizzaOrder
+java.io.Serializable <|.. PizzeriaCore.OrderLogger
+
+' Composition
+PizzeriaCore.PizzaOrder *-- PizzeriaCore.State
+
+' Associations (object fields, "has-a")
+Pizzeria --> PizzeriaCore.OrderLogger
+PizzeriaCore.Baker --> PizzeriaCore.SharedQueue
+PizzeriaCore.Baker --> PizzeriaCore.Warehouse
+PizzeriaCore.Baker --> PizzeriaCore.OrderLogger
+PizzeriaCore.Courier --> PizzeriaCore.Warehouse
+PizzeriaCore.Courier --> PizzeriaCore.OrderLogger
+PizzeriaCore.Warehouse --> PizzeriaCore.SharedQueue
+PizzeriaCore.Warehouse --> PizzeriaCore.OrderLogger
+PizzeriaCore.BackupManager --> PizzeriaCore.OrderLogger
+PizzeriaConfig.PizzeriaConfiguration --> PizzeriaConfig.BakerConfig
+PizzeriaConfig.PizzeriaConfiguration --> PizzeriaConfig.CourierConfig
+
+' Dependencies (method usage, "uses-a")
+Pizzeria ..> PizzeriaConfig.ConfigurationLoader
+Pizzeria ..> PizzeriaConfig.PizzeriaConfiguration
+Pizzeria ..> PizzeriaCore.Baker
+Pizzeria ..> PizzeriaCore.Courier
+Pizzeria ..> PizzeriaCore.Warehouse
+Pizzeria ..> PizzeriaCore.SharedQueue
+Pizzeria ..> PizzeriaCore.BackupManager
+Pizzeria ..> PizzeriaCore.PizzaOrder
+
+PizzeriaConfig.ConfigurationLoader ..> PizzeriaConfig.PizzeriaConfiguration
+
+PizzeriaCore.BackupManager ..> PizzeriaCore.SharedQueue
+PizzeriaCore.BackupManager ..> PizzeriaCore.Warehouse
+PizzeriaCore.BackupManager ..> PizzeriaCore.Baker
+PizzeriaCore.BackupManager ..> PizzeriaCore.Courier
+
+@enduml
