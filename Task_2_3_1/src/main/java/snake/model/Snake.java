@@ -50,7 +50,7 @@ public class Snake {
     }
 
     public void setDirection(Direction newDirection) {
-        Direction lastDirection = directionQueue.isEmpty() ? currentDirection : directionQueue.getLast();
+        Direction lastDirection = directionQueue.isEmpty() ? currentDirection : directionQueue.get(directionQueue.size() - 1);
         
         if (!lastDirection.isOpposite(newDirection) && lastDirection != newDirection) {
             if (directionQueue.size() < 3) {

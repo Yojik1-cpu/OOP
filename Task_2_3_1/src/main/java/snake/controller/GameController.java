@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 import snake.GameConfig;
 import snake.model.*;
@@ -49,7 +50,7 @@ public class GameController {
         gameCanvas.setHeight(GameConfig.HEIGHT * GameConfig.TILE_SIZE);
         
         renderer = new GameRenderer(gc);
-        renderer.fullRender(new Game(GameConfig.WIDTH, GameConfig.HEIGHT, 0, new LengthWinCondition(999), new DefaultFoodFactory())); 
+        renderer.fullRender(new Game(GameConfig.WIDTH, GameConfig.HEIGHT, 0, new LengthWinCondition(999), (w, h, o) -> null)); 
     }
 
     public void initGame(int difficulty, int foodCount, String difficultyMode) {
@@ -117,8 +118,9 @@ public class GameController {
             }
         }
         
-        Point oldTail = game.getSnake().getBody().getLast();
-        LinkedList<Point> oldSnakeBody = new LinkedList<>(game.getSnake().getBody());
+        List<Point> snakeBody = game.getSnake().getBody();
+        Point oldTail = snakeBody.get(snakeBody.size() - 1);
+        LinkedList<Point> oldSnakeBody = new LinkedList<>(snakeBody);
 
         game.update();
 
