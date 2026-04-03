@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: #f0f0f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.controller.SettingsController">
+   <children>
+      <Label text="Game Settings">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <VBox alignment="CENTER_LEFT" prefWidth="250.0" spacing="10.0">
+         <children>
+            <Label text="Difficulty Mode:" />
+            <HBox spacing="10.0">
+               <children>
+                  <RadioButton fx:id="fixedDifficultyRadio" mnemonicParsing="false" selected="true" text="Fixed">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="difficultyToggleGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="increasingDifficultyRadio" mnemonicParsing="false" text="Increasing" toggleGroup="$difficultyToggleGroup" />
+               </children>
+            </HBox>
+            <Label text="Initial Speed:" />
+            <Slider fx:id="difficultySlider" blockIncrement="1.0" majorTickUnit="1.0" max="10" min="1" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="5" />
+            <Label text="Food Count:" />
+            <Slider fx:id="foodSlider" blockIncrement="1.0" majorTickUnit="1.0" max="10" min="1" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="3" />
+         </children>
+      </VBox>
+      <Button fx:id="startButton" mnemonicParsing="false" onAction="#startGame" prefHeight="40.0" prefWidth="150.0" text="Start Game">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

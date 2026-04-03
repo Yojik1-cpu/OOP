@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.controller.GameController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #333;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="scoreLabel" text="Score: 1" textFill="white">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="speedLabel" text="Speed: 5" textFill="white">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="modeLabel" text="Mode: Fixed" textFill="white">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#togglePause" prefHeight="25.0" prefWidth="40.0" text="⏸" />
+            <Button fx:id="restartButton" mnemonicParsing="false" onAction="#restartGame" prefHeight="25.0" prefWidth="40.0" text="🔄" />
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Canvas fx:id="gameCanvas" height="400.0" width="400.0" />
+            <Label fx:id="gameOverLabel" text="GAME OVER" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="52.0" />
+               </font>
+            </Label>
+            <Label fx:id="pauseLabel" text="⏸" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="96.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
