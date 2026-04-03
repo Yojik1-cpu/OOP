@@ -16,7 +16,8 @@ class SnakeGameTest {
 
     @BeforeEach
     void setUp() {
-        WinCondition winCondition = new LengthWinCondition(100);
+        WinCondition winCondition = new LengthWinCondition(100); 
+        
         FoodFactory dummyFactory = (width, height, occupiedPoints) -> new Food() {
             @Override public Point getPosition() { return new Point(0, 0); }
             @Override public int getScoreValue() { return 1; }
@@ -82,15 +83,14 @@ class SnakeGameTest {
 
     @Test
     void collisionWithWall() {
-        for (int i = 0; i < 9; i++) {
+        int moves = 0;
+        while (!game.isGameOver() && moves < 100) {
             game.update();
+            moves++;
         }
-        assertFalse(game.isGameOver());
-
-        game.update();
-
         assertTrue(game.isGameOver());
         assertFalse(game.isWon());
+        assertEquals(10, moves);
     }
 
     @Test
@@ -112,7 +112,7 @@ class SnakeGameTest {
     @Test
     void scoreIncreasesDefaultFood() {
         int initialScore = game.getScore();
-        Point foodPos = game.getFoods().getFirst().getPosition();
+        Point foodPos = game.getFoods().get(0).getPosition();
         
         game.getSnake().getBody().clear();
         game.getSnake().getBody().add(new Point(foodPos.x - 1, foodPos.y));
