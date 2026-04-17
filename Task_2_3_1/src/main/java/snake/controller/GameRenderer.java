@@ -11,15 +11,18 @@ import java.util.LinkedList;
 
 public class GameRenderer {
     private final GraphicsContext gc;
-    private final int tileSize;
+    private double tileSize;
     private final int width;
     private final int height;
 
     public GameRenderer(GraphicsContext gc) {
         this.gc = gc;
-        this.tileSize = GameConfig.TILE_SIZE;
         this.width = GameConfig.WIDTH;
         this.height = GameConfig.HEIGHT;
+    }
+
+    public void setTileSize(double newTileSize) {
+        this.tileSize = newTileSize;
     }
 
     public void fullRender(Game game) {

@@ -4,9 +4,12 @@ import javafx.scene.paint.Color;
 
 public class GameConfig {
 
-    public static final int TILE_SIZE = 20;
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 20;
+    public static final int TILE_SIZE = 25;
+    public static final double MAX_CANVAS_WIDTH = 1000.0;
+    public static final double MAX_CANVAS_HEIGHT = 800.0;
+
+    public static final int WIDTH = 100;
+    public static final int HEIGHT = 100;
 
     public static final long BASE_SPEED_NS = 250_000_000L;
     public static final long SPEED_STEP_NS = 20_000_000L;

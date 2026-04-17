@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.controller.GameController">
+<BorderPane fx:id="rootPane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake.controller.GameController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="10.0" style="-fx-background-color: #333;" BorderPane.alignment="CENTER">
          <children>
@@ -35,9 +35,9 @@
       </HBox>
    </top>
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="gameStackPane" style="-fx-background-color: #698f24;" BorderPane.alignment="CENTER">
          <children>
-            <Canvas fx:id="gameCanvas" height="400.0" width="400.0" />
+            <Canvas fx:id="gameCanvas" />
             <Label fx:id="gameOverLabel" text="GAME OVER" textFill="RED" visible="false">
                <font>
                   <Font name="System Bold" size="52.0" />

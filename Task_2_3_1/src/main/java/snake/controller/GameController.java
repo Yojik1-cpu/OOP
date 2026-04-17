@@ -13,7 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -32,6 +34,7 @@ public class GameController {
     @FXML private Label gameOverLabel;
     @FXML private Label pauseLabel;
     @FXML private Button pauseButton;
+    @FXML private StackPane gameStackPane;
 
     private Game game;
     private GameRenderer renderer;
@@ -46,11 +49,13 @@ public class GameController {
     @FXML
     public void initialize() {
         GraphicsContext gc = gameCanvas.getGraphicsContext2D();
-        gameCanvas.setWidth(GameConfig.WIDTH * GameConfig.TILE_SIZE);
-        gameCanvas.setHeight(GameConfig.HEIGHT * GameConfig.TILE_SIZE);
+        
+        gameStackPane.widthProperty().addListener((obs, oldVal, newVal) 
+                -> resizeGame());
+        gameStackPane.heightProperty().addListener((obs, oldVal, newVal) 
+                -> resizeGame());
         
         renderer = new GameRenderer(gc);
-        renderer.fullRender(new Game(GameConfig.WIDTH, GameConfig.HEIGHT, 0, new LengthWinCondition(999), (w, h, o) -> null)); 
     }
 
     public void initGame(int difficulty, int foodCount, String difficultyMode) {
@@ -58,7 +63,7 @@ public class GameController {
         this.difficultyMode = difficultyMode;
         
         WinCondition winCondition = new LengthWinCondition(GameConfig.WIN_LENGTH);
-        FoodFactory foodFactory = new DefaultFoodFactory();
+        FoodFactory foodFactory = new RandomFoodFactory();
         
         this.game = new Game(GameConfig.WIDTH, GameConfig.HEIGHT, foodCount, winCondition, foodFactory);
         
@@ -69,7 +74,7 @@ public class GameController {
 
         rootPane.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPress);
 
-        renderer.fullRender(game);
+        resizeGame();
         updateUI();
 
         this.timer = new AnimationTimer() {
@@ -110,7 +115,8 @@ public class GameController {
     private void tick() {
         if ("Increasing".equals(difficultyMode)) {
             int foodEaten = game.getFoodEaten();
-            if (foodEaten > 0 && foodEaten % GameConfig.FOODS_TO_INCREASE_SPEED == 0 && foodEaten > lastSpeedIncreaseAt) {
+            if (foodEaten > 0 && foodEaten % GameConfig.FOODS_TO_INCREASE_SPEED == 0 
+                    && foodEaten > lastSpeedIncreaseAt) {
                 speed = (long) (speed * GameConfig.SPEED_MULTIPLIER);
                 lastSpeedIncreaseAt = foodEaten;
                 int currentLevel = initialDifficulty + (foodEaten / GameConfig.FOODS_TO_INCREASE_SPEED);
@@ -130,6 +136,42 @@ public class GameController {
     
     private void updateUI() {
         scoreLabel.setText("Score: " + game.getScore());
+    }
+
+    private void resizeGame() {
+        if (game == null || gameCanvas == null || gameStackPane == null) return;
+        
+        double containerWidth = gameStackPane.getWidth();
+        double containerHeight = gameStackPane.getHeight();
+        if (containerWidth <= 0 || containerHeight <= 0) return;
+
+        double maxCellWidth = containerWidth / GameConfig.WIDTH;
+        double maxCellHeight = containerHeight / GameConfig.HEIGHT;
+        
+        double actualTileSize = Math.min(maxCellWidth, maxCellHeight);
+        
+        actualTileSize = Math.min(actualTileSize, GameConfig.TILE_SIZE);
+
+        double renderWidth = GameConfig.WIDTH * actualTileSize;
+        double renderHeight = GameConfig.HEIGHT * actualTileSize;
+        
+        gameCanvas.setWidth(renderWidth);
+        gameCanvas.setHeight(renderHeight);
+
+        renderer.setTileSize(actualTileSize);
+
+        double baseFontSize = Math.max(12, actualTileSize * 1.5); 
+        gameOverLabel.setFont(Font.font("System Bold", baseFontSize * 2));
+        pauseLabel.setFont(Font.font(baseFontSize * 3)); 
+        
+        GraphicsContext gc = gameCanvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, gameCanvas.getWidth(), gameCanvas.getHeight());
+
+        renderer.fullRender(game);
+        
+        if (game.isGameOver()) {
+            renderer.renderGameOver();
+        }
     }
 
     @FXML

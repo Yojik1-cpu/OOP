@@ -35,4 +35,13 @@ jacocoTestReport {
     reports {
         xml.required = true
     }
+    classDirectories.setFrom(files(classDirectories.files.collect {
+        fileTree(dir: it, exclude: [
+            'snake/Main.class',
+            'snake/GameConfig.class',
+            'snake/controller/GameController.class',
+            'snake/controller/GameRenderer.class',
+            'snake/controller/SettingsController.class'
+        ])
+    }))
 }
