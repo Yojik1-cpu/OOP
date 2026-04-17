@@ -31,17 +31,27 @@ test {
     useJUnitPlatform()
 }
 
+jacoco {
+    toolVersion = "0.8.8"
+}
+
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = true
+        html.required = true
     }
-    classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: [
-            'snake/Main.class',
-            'snake/GameConfig.class',
-            'snake/controller/GameController.class',
-            'snake/controller/GameRenderer.class',
-            'snake/controller/SettingsController.class'
-        ])
-    }))
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                'snake/Main.class',
+                'snake/GameConfig.class',
+                'snake/controller/GameController.class',
+                'snake/controller/GameRenderer.class',
+                'snake/controller/SettingsController.class',
+                'snake/view/**'
+            ])
+        }))
+    }
 }
