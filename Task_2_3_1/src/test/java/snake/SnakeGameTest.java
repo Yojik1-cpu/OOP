@@ -126,7 +126,7 @@ class SnakeGameTest {
     @Test
     void winConditionMet() {
         WinCondition winCondition = new LengthWinCondition(5);
-        FoodFactory foodFactory = new DefaultFoodFactory();
+        FoodFactory foodFactory = new RandomFoodFactory();
         game = new Game(20, 20, 1, winCondition, foodFactory);
         
         game.getSnake().grow(4);
@@ -151,7 +151,7 @@ class SnakeGameTest {
         }
         List<Point> snakeBody = snake.getBody();
         
-        FoodFactory factory = new DefaultFoodFactory();
+        FoodFactory factory = new RandomFoodFactory();
         Food newFood = factory.createFood(gameWidth, gameHeight, snakeBody);
         
         assertFalse(snakeBody.contains(newFood.getPosition()));
@@ -159,7 +159,7 @@ class SnakeGameTest {
     
     @Test
     void foodFactoryCreatesFood() {
-        FoodFactory factory = new DefaultFoodFactory();
+        FoodFactory factory = new RandomFoodFactory();
         Food food = factory.createFood(gameWidth, gameHeight, game.getSnake().getBody());
         assertNotNull(food);
     }

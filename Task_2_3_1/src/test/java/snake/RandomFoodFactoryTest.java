@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FoodFactoryTest {
+class RandomFoodFactoryTest {
 
     @Test
     void factoryCreatesNonNullFood() {
-        FoodFactory factory = new DefaultFoodFactory();
+        FoodFactory factory = new RandomFoodFactory();
         Food food = factory.createFood(20, 20, new ArrayList<>());
         assertNotNull(food);
     }
 
     @Test
     void factoryRespectsBonusChance() {
-        FoodFactory factory = new DefaultFoodFactory();
+        FoodFactory factory = new RandomFoodFactory();
         int bonusFoodCount = 0;
         int totalRuns = 10000;
         
