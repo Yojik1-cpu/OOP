@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public class LabTask {
     private String id;
     private String title;
-    private String description;
     private Integer maxScore;
     private LocalDate softDeadline;
     private LocalDate hardDeadline;
@@ -24,14 +23,6 @@ public class LabTask {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getMaxScore() {
@@ -63,7 +54,6 @@ public class LabTask {
         return "LabTask{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
                 ", maxScore=" + maxScore +
                 ", softDeadline=" + softDeadline +
                 ", hardDeadline=" + hardDeadline +

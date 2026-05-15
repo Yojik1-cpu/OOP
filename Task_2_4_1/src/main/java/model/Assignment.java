@@ -7,7 +7,6 @@ public class Assignment {
     private String taskId;
     private String projectPath;
     private Integer score;
-    private String status;
     private LocalDate submittedAt;
 
     public String getStudentGithubNick() {
@@ -42,14 +41,6 @@ public class Assignment {
         this.score = score;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public LocalDate getSubmittedAt() {
         return submittedAt;
     }
@@ -65,7 +56,6 @@ public class Assignment {
                 ", taskId='" + taskId + '\'' +
                 ", projectPath='" + projectPath + '\'' +
                 ", score=" + score +
-                ", status='" + status + '\'' +
                 ", submittedAt=" + submittedAt +
                 '}';
     }

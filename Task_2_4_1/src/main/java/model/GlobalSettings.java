@@ -1,23 +1,19 @@
 package model;
 
+import java.time.LocalDate;
+
 public class GlobalSettings {
-    private String gradingCriteria = "default";
     private Long testTimeoutSeconds = 300L;
     private Long buildTimeoutSeconds = 300L;
     private Long gitTimeoutSeconds = 180L;
     private Integer extraPoints = 0;
-    private Double latePenaltyPerDay = 0.1;
-    private Integer excellentThreshold = 85;
-    private Integer goodThreshold = 70;
-    private Integer satisfactoryThreshold = 50;
+    private Integer excellentThreshold = 80;
+    private Integer goodThreshold = 60;
+    private Integer satisfactoryThreshold = 40;
 
-    public String getGradingCriteria() {
-        return gradingCriteria;
-    }
-
-    public void setGradingCriteria(String gradingCriteria) {
-        this.gradingCriteria = gradingCriteria;
-    }
+    private LocalDate semesterStart;
+    private LocalDate semesterEnd;
+    private Double activityWeight = 0.2;
 
     public Long getTestTimeoutSeconds() {
         return testTimeoutSeconds;
@@ -51,14 +47,6 @@ public class GlobalSettings {
         this.extraPoints = extraPoints;
     }
 
-    public Double getLatePenaltyPerDay() {
-        return latePenaltyPerDay;
-    }
-
-    public void setLatePenaltyPerDay(Double latePenaltyPerDay) {
-        this.latePenaltyPerDay = latePenaltyPerDay;
-    }
-
     public Integer getExcellentThreshold() {
         return excellentThreshold;
     }
@@ -83,18 +71,43 @@ public class GlobalSettings {
         this.satisfactoryThreshold = satisfactoryThreshold;
     }
 
+    public LocalDate getSemesterStart() {
+        return semesterStart;
+    }
+
+    public void setSemesterStart(LocalDate semesterStart) {
+        this.semesterStart = semesterStart;
+    }
+
+    public LocalDate getSemesterEnd() {
+        return semesterEnd;
+    }
+
+    public void setSemesterEnd(LocalDate semesterEnd) {
+        this.semesterEnd = semesterEnd;
+    }
+
+    public Double getActivityWeight() {
+        return activityWeight;
+    }
+
+    public void setActivityWeight(Double activityWeight) {
+        this.activityWeight = activityWeight;
+    }
+
     @Override
     public String toString() {
         return "GlobalSettings{" +
-                "gradingCriteria='" + gradingCriteria + '\'' +
                 "testTimeoutSeconds=" + testTimeoutSeconds +
                 ", buildTimeoutSeconds=" + buildTimeoutSeconds +
                 ", gitTimeoutSeconds=" + gitTimeoutSeconds +
                 ", extraPoints=" + extraPoints +
-                ", latePenaltyPerDay=" + latePenaltyPerDay +
                 ", excellentThreshold=" + excellentThreshold +
                 ", goodThreshold=" + goodThreshold +
                 ", satisfactoryThreshold=" + satisfactoryThreshold +
+                ", semesterStart=" + semesterStart +
+                ", semesterEnd=" + semesterEnd +
+                ", activityWeight=" + activityWeight +
                 '}';
     }
 }
