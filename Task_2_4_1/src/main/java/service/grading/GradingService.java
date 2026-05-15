@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
@@ -47,19 +48,20 @@ public class GradingService {
         Map<String, List<Assignment>> assignmentsByStudent = data.getAssignments().stream().collect(Collectors.groupingBy(Assignment::getStudentGithubNick));
         SimpleLogger.info("Starting concurrent grading for " + assignmentsByStudent.size() + " students...");
         
-        try (ExecutorService executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor()) {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        try {
             List<Future<StudentGradingResult>> futures = new ArrayList<>();
             for (Map.Entry<String, List<Assignment>> entry : assignmentsByStudent.entrySet()) {
                 Student student = studentsByNick.get(entry.getKey());
                 futures.add(executor.submit(() -> processStudent(student, entry.getValue(), tasksById, settings)));
             }
             for (Future<StudentGradingResult> future : futures) {
-                try { studentResults.add(future.get()); } catch (ExecutionException e) { SimpleLogger.error("Unhandled execution error", e.getCause()); }
+                try { studentResults.add(future.get()); } catch (ExecutionException | InterruptedException e) { SimpleLogger.error("Unhandled execution error", e.getCause()); }
             }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException("Grading was interrupted", e);
+        } finally {
+            executor.shutdown();
         }
+        
         SimpleLogger.info("Grading finished. Generating final report data...");
         return toFinalReport(studentResults, data, studentsByNick, tasksById, settings);
     }
@@ -109,13 +111,8 @@ public class GradingService {
                     continue;
                 }
                 
-                String relativeProjectPath = repoDir.relativize(projectDir).toString().replace('\\', '/');
-                if (relativeProjectPath.isEmpty()) {
-                    relativeProjectPath = ".";
-                }
-                
-                result.firstCommitDate = gitService.getFirstCommitDate(repoDir, relativeProjectPath);
-                result.lastCommitDate = gitService.getLastCommitDate(repoDir, relativeProjectPath);
+                result.firstCommitDate = gitService.getFirstCommitDate(repoDir, repoDir.relativize(projectDir).toString());
+                result.lastCommitDate = gitService.getLastCommitDate(repoDir, repoDir.relativize(projectDir).toString());
                 
                 BuildTool buildTool = buildTools.stream().filter(t -> t.canHandle(projectDir)).findFirst().orElse(null);
                 if (buildTool == null) {
@@ -185,11 +182,11 @@ public class GradingService {
             row.setGitOk(result.gitOk);
             row.setBuildOk(result.compilationOk);
             row.setDocsOk(result.docsOk);
-
+            
             int styleWarnings = (result.styleResult != null) ? result.styleResult.errorsCount : -1;
             row.setStyleOk(styleWarnings >= 0 && styleWarnings < 10);
             row.setStyleErrors(styleWarnings);
-
+            
             row.setTestsOk(result.testStats != null && result.testStats.commandSuccessful);
             row.setTotalTests(result.testStats != null ? result.testStats.total : 0);
             row.setFailedTests(result.testStats != null ? result.testStats.failed : 0);
