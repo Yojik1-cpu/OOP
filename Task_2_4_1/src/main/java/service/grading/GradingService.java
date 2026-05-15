@@ -56,7 +56,11 @@ public class GradingService {
                 futures.add(executor.submit(() -> processStudent(student, entry.getValue(), tasksById, settings)));
             }
             for (Future<StudentGradingResult> future : futures) {
-                try { studentResults.add(future.get()); } catch (ExecutionException | InterruptedException e) { SimpleLogger.error("Unhandled execution error", e.getCause()); }
+                try {
+                    studentResults.add(future.get());
+                } catch (ExecutionException | InterruptedException e) {
+                    SimpleLogger.error("Unhandled execution error", e.getCause());
+                }
             }
         } finally {
             executor.shutdown();
