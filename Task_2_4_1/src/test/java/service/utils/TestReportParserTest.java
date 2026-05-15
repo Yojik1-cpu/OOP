@@ -26,11 +26,26 @@ public class TestReportParserTest {
         Files.writeString(report1, xml1);
         Files.writeString(report2, xml2);
 
-        TestStats stats = TestReportParser.parseXmlReports(tempDir,
-                true, "output", 0.8);
+        TestStats stats = TestReportParser.parseXmlReports(tempDir, true, "output", 0.8);
         
         assertEquals(8, stats.total);
-        assertEquals(2, stats.failed);
+        assertEquals(2, stats.failed); // 1 failure + 1 error
         assertEquals(1, stats.skipped);
+        assertEquals(0.8, stats.codeCoverage);
+    }
+
+    @Test
+    public void testParseXmlReports_NoReports() {
+        TestStats stats = TestReportParser.parseXmlReports(tempDir, true, "output", null);
+        assertEquals(0, stats.total);
+        assertEquals(0, stats.failed);
+    }
+
+    @Test
+    public void testParseXmlReports_EmptyDir() throws IOException {
+        Path emptyDir = tempDir.resolve("empty");
+        Files.createDirectories(emptyDir);
+        TestStats stats = TestReportParser.parseXmlReports(emptyDir, true, "output", null);
+        assertEquals(0, stats.total);
     }
 }

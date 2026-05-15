@@ -1,5 +1,5 @@
 importConfig "task_1_1_1.groovy"
-//importConfig "task_1_1_2.groovy"
+importConfig "task_1_1_2.groovy"
 //importConfig "task_1_1_3.groovy"
 //importConfig "task_1_2_1.groovy"
 //importConfig "task_1_2_2.groovy"

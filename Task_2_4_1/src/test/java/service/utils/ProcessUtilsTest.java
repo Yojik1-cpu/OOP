@@ -25,4 +25,18 @@ public class ProcessUtilsTest {
             ProcessUtils.runCommand(List.of("non-existent-command-12345"), Path.of("."), 5);
         });
     }
+
+    @Test
+    public void testRunCommand_Timeout() {
+        assertDoesNotThrow(() -> {
+            String os = System.getProperty("os.name").toLowerCase();
+            List<String> command = os.contains("win") 
+                ? List.of("cmd", "/c", "ping", "-n", "3", "127.0.0.1") 
+                : List.of("sleep", "2");
+            
+            ProcessUtils.CommandResult result = ProcessUtils.runCommand(command, Path.of("."), 1);
+            assertEquals(-1, result.exitCode);
+            assertTrue(result.output.contains("timed out"));
+        });
+    }
 }

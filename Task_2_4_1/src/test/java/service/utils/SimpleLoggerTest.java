@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SimpleLoggerTest {
 
@@ -21,10 +22,17 @@ public class SimpleLoggerTest {
             SimpleLogger.info("Test Info");
             SimpleLogger.warn("Test Warn");
             SimpleLogger.error("Test Error");
+            SimpleLogger.error("Test Exception", new RuntimeException("test"));
 
-            assertTrue(outContent.toString().contains("[INFO] Test Info"));
-            assertTrue(outContent.toString().contains("[WARN] Test Warn"));
-            assertTrue(errContent.toString().contains("[ERROR] Test Error"));
+            String out = outContent.toString();
+            String err = errContent.toString();
+
+            assertTrue(out.contains("[INFO] Test Info"));
+            assertTrue(out.contains("[WARN] Test Warn"));
+            assertTrue(err.contains("[ERROR] Test Error"));
+            assertTrue(err.contains("java.lang.RuntimeException: test"));
+            
+            assertFalse(err.contains("[INFO]"));
         } finally {
             System.setOut(originalOut);
             System.setErr(originalErr);

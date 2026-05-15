@@ -21,6 +21,7 @@ public class JacocoReportParserTest {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                      "<report name=\"Task_1_1_1\">" +
                      "<counter type=\"INSTRUCTION\" missed=\"25\" covered=\"75\"/>" +
+                     "<counter type=\"LINE\" missed=\"10\" covered=\"90\"/>" +
                      "</report>";
         Files.writeString(reportFile, xml);
 
@@ -31,5 +32,21 @@ public class JacocoReportParserTest {
     @Test
     public void testParseCoverage_MissingFile() {
         assertNull(JacocoReportParser.parseCoverage(tempDir.resolve("non-existent.xml")));
+    }
+
+    @Test
+    public void testParseCoverage_MalformedXml() throws IOException {
+        Path reportFile = tempDir.resolve("malformed.xml");
+        String xml = "<report><counter>...malformed";
+        Files.writeString(reportFile, xml);
+        assertNull(JacocoReportParser.parseCoverage(reportFile));
+    }
+
+    @Test
+    public void testParseCoverage_NoCounters() throws IOException {
+        Path reportFile = tempDir.resolve("nocounters.xml");
+        String xml = "<report></report>";
+        Files.writeString(reportFile, xml);
+        assertNull(JacocoReportParser.parseCoverage(reportFile));
     }
 }
