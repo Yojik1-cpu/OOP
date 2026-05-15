@@ -32,10 +32,27 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-public class GradingService {
-    private final GitService gitService = new GitService();
-    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
-    private final List<BuildTool> buildTools = List.of(new GradleBuildTool(), new MavenBuildTool(), new JavacBuildTool());
+public class GradingService implements AutoCloseable {
+    private final GitService gitService;
+    private final ScoreCalculator scoreCalculator;
+    private final List<BuildTool> buildTools;
+    private final ExecutorService executor;
+
+    public GradingService() {
+        this(new GitService(), new ScoreCalculator(), List.of(new GradleBuildTool(), new MavenBuildTool(), new JavacBuildTool()), Executors.newCachedThreadPool());
+    }
+
+    public GradingService(GitService gitService, ScoreCalculator scoreCalculator, List<BuildTool> buildTools, ExecutorService executor) {
+        this.gitService = gitService;
+        this.scoreCalculator = scoreCalculator;
+        this.buildTools = buildTools;
+        this.executor = executor;
+    }
+
+    @Override
+    public void close() {
+        executor.shutdown();
+    }
 
     public FinalReport executeGrading(ScriptData data) {
         SimpleLogger.info("Verifying git config...");
@@ -48,7 +65,6 @@ public class GradingService {
         Map<String, List<Assignment>> assignmentsByStudent = data.getAssignments().stream().collect(Collectors.groupingBy(Assignment::getStudentGithubNick));
         SimpleLogger.info("Starting concurrent grading for " + assignmentsByStudent.size() + " students...");
         
-        ExecutorService executor = Executors.newCachedThreadPool();
         try {
             List<Future<StudentGradingResult>> futures = new ArrayList<>();
             for (Map.Entry<String, List<Assignment>> entry : assignmentsByStudent.entrySet()) {
@@ -62,8 +78,8 @@ public class GradingService {
                     SimpleLogger.error("Unhandled execution error", e.getCause());
                 }
             }
-        } finally {
-            executor.shutdown();
+        } catch (Exception e) {
+            throw new IllegalStateException("Grading was interrupted", e);
         }
         
         SimpleLogger.info("Grading finished. Generating final report data...");
@@ -166,7 +182,7 @@ public class GradingService {
         return map;
     }
 
-    private FinalReport toFinalReport(List<StudentGradingResult> studentResults, ScriptData data, Map<String, Student> studentsByNick, Map<String, LabTask> tasksById, GlobalSettings settings) {
+    public FinalReport toFinalReport(List<StudentGradingResult> studentResults, ScriptData data, Map<String, Student> studentsByNick, Map<String, LabTask> tasksById, GlobalSettings settings) {
         FinalReport report = new FinalReport();
         
         List<AssignmentResult> allResults = new ArrayList<>();

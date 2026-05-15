@@ -26,18 +26,19 @@ public class Main {
         SimpleLogger.info("Assignments: " + data.getAssignments().size());
         SimpleLogger.info("Checkpoints: " + data.getCheckpoints().size());
 
-        GradingService gradingService = new GradingService();
-        FinalReport report = gradingService.executeGrading(data);
-        
-        HtmlReportRenderer renderer = new HtmlReportRenderer();
-        String html = renderer.render(report, data);
+        try (GradingService gradingService = new GradingService()) {
+            FinalReport report = gradingService.executeGrading(data);
+            
+            HtmlReportRenderer renderer = new HtmlReportRenderer();
+            String html = renderer.render(report, data);
 
-        Path outputPath = Path.of("report.html");
-        try {
-            Files.writeString(outputPath, html);
-            SimpleLogger.info("Report successfully saved to: " + outputPath.toAbsolutePath());
-        } catch (IOException e) {
-            SimpleLogger.error("Failed to write report to file: " + e.getMessage());
+            Path outputPath = Path.of("report.html");
+            try {
+                Files.writeString(outputPath, html);
+                SimpleLogger.info("Report successfully saved to: " + outputPath.toAbsolutePath());
+            } catch (IOException e) {
+                SimpleLogger.error("Failed to write report to file: " + e.getMessage());
+            }
         }
     }
 }
