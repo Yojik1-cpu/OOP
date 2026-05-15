@@ -33,21 +33,10 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 public class GradingService implements AutoCloseable {
-    private final GitService gitService;
-    private final ScoreCalculator scoreCalculator;
-    private final List<BuildTool> buildTools;
-    private final ExecutorService executor;
-
-    public GradingService() {
-        this(new GitService(), new ScoreCalculator(), List.of(new GradleBuildTool(), new MavenBuildTool(), new JavacBuildTool()), Executors.newCachedThreadPool());
-    }
-
-    public GradingService(GitService gitService, ScoreCalculator scoreCalculator, List<BuildTool> buildTools, ExecutorService executor) {
-        this.gitService = gitService;
-        this.scoreCalculator = scoreCalculator;
-        this.buildTools = buildTools;
-        this.executor = executor;
-    }
+    private final GitService gitService = new GitService();
+    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
+    private final List<BuildTool> buildTools = List.of(new GradleBuildTool(), new MavenBuildTool(), new JavacBuildTool());
+    private final ExecutorService executor = Executors.newCachedThreadPool();
 
     @Override
     public void close() {
