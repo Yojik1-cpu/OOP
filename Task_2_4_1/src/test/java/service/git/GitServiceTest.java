@@ -1,6 +1,5 @@
 package service.git;
 
-import model.GlobalSettings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import java.nio.file.Path;
@@ -23,7 +22,7 @@ public class GitServiceTest {
     @Test
     public void testGetFirstAndLastCommitDates_NonGitDir() {
         GitService gitService = new GitService();
-        assertNull(gitService.getFirstCommitDate(tempDir));
-        assertNull(gitService.getLastCommitDate(tempDir));
+        assertNull(gitService.getFirstCommitDate(tempDir, "."));
+        assertNull(gitService.getLastCommitDate(tempDir, "."));
     }
 }
