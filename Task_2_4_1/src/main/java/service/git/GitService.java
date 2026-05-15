@@ -14,12 +14,12 @@ import java.util.Optional;
 public class GitService {
     public void verifyGitConfig() {
         try {
-            ProcessUtils.CommandResult userName = ProcessUtils
-                    .runCommand(List.of("git", "config", "--get", "user.name"), null, 30);
-            ProcessUtils.CommandResult helper = ProcessUtils
-                    .runCommand(List.of("git", "config", "--get", "credential.helper"), null, 30);
-            ProcessUtils.CommandResult askPass = ProcessUtils
-                    .runCommand(List.of("git", "config", "--get", "core.askPass"), null, 30);
+            ProcessUtils.CommandResult userName = ProcessUtils.
+                    runCommand(List.of("git", "config", "--get", "user.name"), null, 30);
+            ProcessUtils.CommandResult helper = ProcessUtils.
+                    runCommand(List.of("git", "config", "--get", "credential.helper"), null, 30);
+            ProcessUtils.CommandResult askPass = ProcessUtils.
+                    runCommand(List.of("git", "config", "--get", "core.askPass"), null, 30);
             if (userName.exitCode != 0 || userName.output.trim().isEmpty()) {
                 throw new IllegalStateException("Git is not configured: `git config --get user.name` is empty.");
             }
@@ -76,8 +76,7 @@ public class GitService {
                 for (String line : lines) {
                     try {
                         dates.add(LocalDate.parse(line.trim()));
-                    } catch (Exception _) {
-                    }
+                    } catch (Exception e) {}
                 }
             }
         } catch (IOException | InterruptedException e) {
@@ -86,32 +85,32 @@ public class GitService {
         return dates;
     }
 
-    public LocalDate getFirstCommitDate(Path projectDir) {
+    public LocalDate getFirstCommitDate(Path repoDir, String relativePath) {
         try {
             ProcessUtils.CommandResult result = ProcessUtils
-                    .runCommand(List.of("git", "log", "--all", "--reverse", "--format=%as", "--", "."),
-                            projectDir, 30);
+                    .runCommand(List.of("git", "log", "--all", "--reverse", "--format=%as", "--", relativePath),
+                            repoDir, 30);
             if (result.exitCode == 0 && !result.output.trim().isEmpty()) {
                 String firstLine = result.output.split("\n")[0].trim();
                 return LocalDate.parse(firstLine);
             }
         } catch (Exception e) {
-            SimpleLogger.warn("Failed to get first commit date for " + projectDir + ": " + e.getMessage());
+            SimpleLogger.warn("Failed to get first commit date for " + relativePath + ": " + e.getMessage());
         }
         return null;
     }
 
-    public LocalDate getLastCommitDate(Path projectDir) {
+    public LocalDate getLastCommitDate(Path repoDir, String relativePath) {
         try {
             ProcessUtils.CommandResult result = ProcessUtils
-                    .runCommand(List.of("git", "log", "--all", "-1", "--format=%as", "--", "."),
-                            projectDir, 30);
+                    .runCommand(List.of("git", "log", "--all", "-1", "--format=%as", "--", relativePath),
+                            repoDir, 30);
             if (result.exitCode == 0 && !result.output.trim().isEmpty()) {
                 String firstLine = result.output.split("\n")[0].trim();
                 return LocalDate.parse(firstLine);
             }
         } catch (Exception e) {
-            SimpleLogger.warn("Failed to get last commit date for " + projectDir + ": " + e.getMessage());
+            SimpleLogger.warn("Failed to get last commit date for " + relativePath + ": " + e.getMessage());
         }
         return null;
     }

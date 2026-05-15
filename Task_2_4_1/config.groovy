@@ -15,7 +15,6 @@ importConfig "task_1_1_2.groovy"
 globalSettings {
     testTimeout 300
     extraPoints 2
-    latePenaltyPerDay 0.1
     semesterStart "2026-02-09"
     semesterEnd "2026-05-30"
 }
