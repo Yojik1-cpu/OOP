@@ -121,7 +121,7 @@ public class HtmlReportRenderer {
         html.append("<table><thead><tr>")
                 .append("<th>Student</th><th class=\"test-col\">Activity</th>")
                 .append("<th class=\"score-col\">Total Score</th><th class=\"score-col\">Max Score</th>")
-                .append("<th class=\"score-col\">Final Grade</th><th class=\"msg-col\">Checkpoints</th>")
+                .append("<th class=\"score-col\">Prognosed Grade</th><th class=\"msg-col\">Checkpoints</th>")
                 .append("</tr></thead><tbody>");
         for (FinalReport.StudentSummary summary : report.getStudentSummaries()) {
             StringBuilder cp = new StringBuilder();

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class ScoreCalculator {
     public double calculateScore(LabTask task, Assignment assignment,
-                                 GlobalSettings settings, LocalDate lastCommitDate) {
+                                 GlobalSettings settings, LocalDate firstCommitDate, LocalDate lastCommitDate) {
         double baseScore;
         if (assignment.getScore() != null) {
             baseScore = assignment.getScore().doubleValue();
@@ -16,18 +16,26 @@ public class ScoreCalculator {
             baseScore = task.getMaxScore() != null ? task.getMaxScore().doubleValue() : 100.0;
         }
 
-        LocalDate submittedAt = assignment.getSubmittedAt();
-        if (submittedAt == null) {
-            submittedAt = lastCommitDate;
+        LocalDate submittedAtForSoft = assignment.getSubmittedAt();
+        if (submittedAtForSoft == null) {
+            submittedAtForSoft = firstCommitDate;
         }
-        if (submittedAt == null) {
-            submittedAt = LocalDate.now();
+        if (submittedAtForSoft == null) {
+            submittedAtForSoft = LocalDate.now();
         }
 
-        if (task.getHardDeadline() != null && submittedAt.isAfter(task.getHardDeadline())) {
+        LocalDate submittedAtForHard = assignment.getSubmittedAt();
+        if (submittedAtForHard == null) {
+            submittedAtForHard = lastCommitDate;
+        }
+        if (submittedAtForHard == null) {
+            submittedAtForHard = LocalDate.now();
+        }
+
+        if (task.getHardDeadline() != null && submittedAtForHard.isAfter(task.getHardDeadline())) {
             baseScore -= 0.5;
         }
-        if (task.getSoftDeadline() != null && submittedAt.isAfter(task.getSoftDeadline())) {
+        if (task.getSoftDeadline() != null && submittedAtForSoft.isAfter(task.getSoftDeadline())) {
             baseScore -= 0.5;
         }
         return Math.max(0, baseScore);

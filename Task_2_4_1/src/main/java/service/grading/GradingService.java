@@ -144,7 +144,7 @@ public class GradingService implements AutoCloseable {
                 result.docsOk = docsRes.exitCode == 0;
                 result.styleResult = StyleCheckService.checkStyle(repoDir, projectDir);
                 result.testStats = buildTool.runTests(projectDir, settings);
-                result.finalScore = scoreCalculator.calculateScore(task, assignment, settings, result.lastCommitDate);
+                result.finalScore = scoreCalculator.calculateScore(task, assignment, settings, result.firstCommitDate, result.lastCommitDate);
                 studentResult.assignments.add(result);
             }
         } catch (IOException | InterruptedException e) {
