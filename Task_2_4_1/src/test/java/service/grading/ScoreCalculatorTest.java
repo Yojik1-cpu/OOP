@@ -23,9 +23,9 @@ public class ScoreCalculatorTest {
         Assignment assignment = new Assignment();
         assignment.setScore(null);
         
-        LocalDate lastCommitDate = LocalDate.now();
+        LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), lastCommitDate);
+        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
         assertEquals(2.0, score);
     }
 
@@ -38,9 +38,9 @@ public class ScoreCalculatorTest {
 
         Assignment assignment = new Assignment();
         
-        LocalDate lastCommitDate = LocalDate.now();
+        LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), lastCommitDate);
+        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
         assertEquals(1.5, score);
     }
 
@@ -53,9 +53,9 @@ public class ScoreCalculatorTest {
 
         Assignment assignment = new Assignment();
         
-        LocalDate lastCommitDate = LocalDate.now();
+        LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), lastCommitDate);
+        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
         assertEquals(1.5, score);
     }
 
@@ -68,9 +68,9 @@ public class ScoreCalculatorTest {
 
         Assignment assignment = new Assignment();
         
-        LocalDate lastCommitDate = LocalDate.now();
+        LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), lastCommitDate);
+        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
         assertEquals(1.0, score);
     }
 
@@ -82,7 +82,8 @@ public class ScoreCalculatorTest {
         Assignment assignment = new Assignment();
         assignment.setScore(1);
         
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), LocalDate.now());
+        LocalDate commitDate = LocalDate.now();
+        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
         assertEquals(1.0, score);
     }
 }
