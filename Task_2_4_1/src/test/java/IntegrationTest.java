@@ -1,20 +1,26 @@
 import dsl.ConfigLoader;
 import dsl.ScriptData;
-import model.Assignment;
-import model.LabTask;
-import model.Student;
-import model.StudentGroup;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.MockedConstruction;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import service.build.GradleBuildTool;
+import service.build.TestStats;
+import service.git.GitService;
 import service.grading.FinalReport;
+import service.grading.GradingService;
 import service.report.HtmlReportRenderer;
-
+import service.style.StyleCheckService;
+import service.utils.ProcessUtils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 
 public class IntegrationTest {
 
@@ -22,53 +28,51 @@ public class IntegrationTest {
     Path tempDir;
 
     @Test
-    public void testFullPipelineWithMockConfig() throws IOException {
-        Path configFile = tempDir.resolve("test-config.groovy");
-        String content = "task { id 'T1'; title 'Test Task'; maxScore 2; softDeadline '2023-01-01'; hardDeadline '2023-01-10' }\n" +
-                         "globalSettings { semesterStart '2023-01-01'; semesterEnd '2023-05-01' }\n" +
-                         "group { name 'G1'; student { githubNick 'S1'; fullName 'Student 1'; repoUrl 'https://github.com/test/repo' } }\n" +
-                         "assignment { studentGithubNick 'S1'; taskId 'T1'; score 2 }";
+    public void testFullPipeline() throws IOException {
+        Path configFile = tempDir.resolve("config.groovy");
+        String content = "task { id 'T1'; title 'Test Task'; maxScore 10; hardDeadline '2025-01-01' }\n" +
+                         "globalSettings { semesterStart '2024-01-01'; semesterEnd '2025-05-01' }\n" +
+                         "group { name 'G1'; student { githubNick 'S1'; fullName 'Student One'; repoUrl 'url' } }\n" +
+                         "assignment { studentGithubNick 'S1'; taskId 'T1' }";
         Files.writeString(configFile, content);
 
-        ConfigLoader loader = new ConfigLoader();
-        ScriptData data = loader.load(configFile);
+        try (MockedConstruction<GitService> mockedGit = Mockito.mockConstruction(GitService.class, (mock, context) -> {
+            Mockito.when(mock.cloneRepository(any(), any(), any())).thenAnswer(invocation -> {
+                Path repoDir = invocation.getArgument(1);
+                Files.createDirectories(repoDir.resolve("T1"));
+                return true;
+            });
+            Mockito.when(mock.getCommitDates(any())).thenReturn(List.of(LocalDate.of(2024, 10, 1)));
+            Mockito.when(mock.getLastCommitDate(any(), any())).thenReturn(LocalDate.of(2024, 10, 2));
+        });
+             MockedConstruction<GradleBuildTool> mockedGradle = Mockito.mockConstruction(GradleBuildTool.class, (mock, context) -> {
+                 Mockito.when(mock.canHandle(any())).thenReturn(true);
+                 Mockito.when(mock.compile(any(), any())).thenReturn(new ProcessUtils.CommandResult(0, ""));
+                 Mockito.when(mock.generateDocs(any(), any())).thenReturn(new ProcessUtils.CommandResult(0, ""));
+                 Mockito.when(mock.runTests(any(), any())).thenReturn(new TestStats(10, 0, 0, true, "", 1.0));
+             });
+             MockedStatic<StyleCheckService> mockedStyle = Mockito.mockStatic(StyleCheckService.class)) {
 
-        assertEquals(1, data.getTasks().size());
-        assertEquals(1, data.getAssignments().size());
-        
-        assertNotNull(data.getGlobalSettings().getSemesterStart());
-        assertEquals(LocalDate.of(2023, 1, 1), data.getGlobalSettings().getSemesterStart());
-    }
+            mockedStyle.when(() -> StyleCheckService.checkStyle(any(), any()))
+                    .thenReturn(new StyleCheckService.StyleResult(true, 0, "OK"));
 
-    @Test
-    public void testHtmlGeneration() {
-        ScriptData data = new ScriptData();
-        LabTask task = new LabTask();
-        task.setId("T1");
-        task.setTitle("Task 1");
-        data.getTasks().add(task);
+            ConfigLoader loader = new ConfigLoader();
+            ScriptData data = loader.load(configFile);
 
-        Student student = new Student();
-        student.setGithubNick("S1");
-        StudentGroup group = new StudentGroup();
-        group.addStudent(student);
-        data.getGroups().add(group);
+            GradingService gradingService = new GradingService();
+            FinalReport report = gradingService.executeGrading(data);
+            gradingService.close();
 
-        FinalReport report = new FinalReport();
-        FinalReport.GradingRow row = new FinalReport.GradingRow();
-        row.setStudentGithubNick("S1");
-        row.setTaskId("T1");
-        row.setFinalScore(1.5);
-        row.setBuildOk(true);
-        row.setMessage("OK");
-        report.addRow(row);
+            HtmlReportRenderer renderer = new HtmlReportRenderer();
+            String html = renderer.render(report, data);
 
-        HtmlReportRenderer renderer = new HtmlReportRenderer();
-        String html = renderer.render(report, data);
-
-        assertNotNull(html);
-        assertTrue(html.contains("Task 1"));
-        assertTrue(html.contains("S1"));
-        assertTrue(html.contains("1.5"));
+            assertTrue(html.contains("Student One"));
+            assertTrue(html.contains("S1"));
+            assertTrue(html.contains("Test Task"));
+            assertTrue(html.contains("true-cell"));
+            assertTrue(html.contains("<td class=\"test-col\">10</td>"));
+            assertTrue(html.contains("100%"));
+            assertTrue(html.contains("10.0"));
+        }
     }
 }
