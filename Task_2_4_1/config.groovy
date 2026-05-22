@@ -81,4 +81,5 @@ group {
 checkpoint {
     name "Initial check"
     date "2026-04-22"
+    requiredScore 2
 }
