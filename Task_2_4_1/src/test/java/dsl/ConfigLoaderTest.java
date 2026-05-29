@@ -1,45 +1,44 @@
 package dsl;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigLoaderTest {
 
-    @TempDir
-    Path tempDir;
+    private static class TestConfigLoader extends ConfigLoader {
+        private final Map<String, String> resources = new HashMap<>();
+
+        public void addResource(String path, String content) {
+            resources.put(path, content);
+        }
+
+        @Override
+        protected String readResource(String resourcePath) {
+            return resources.get(resourcePath);
+        }
+    }
 
     @Test
-    public void testLoad_SimpleConfig() throws IOException {
-        Path configFile = tempDir.resolve("config.groovy");
-        String content = "task { id 'T1'; title 'Task 1' }";
-        Files.writeString(configFile, content);
-
-        ConfigLoader loader = new ConfigLoader();
-        ScriptData data = loader.load(configFile);
+    public void testLoad_SimpleConfig() {
+        TestConfigLoader loader = new TestConfigLoader();
+        loader.addResource("config.groovy", "task { id 'T1'; title 'Task 1' }");
+        
+        ScriptData data = loader.load("config.groovy");
 
         assertEquals(1, data.getTasks().size());
         assertEquals("T1", data.getTasks().get(0).getId());
     }
 
     @Test
-    public void testLoad_WithImport() throws IOException {
-        Path tasksFile = tempDir.resolve("tasks.groovy");
-        String tasksContent = "task { id 'T1'; title 'Task 1' }";
-        Files.writeString(tasksFile, tasksContent);
+    public void testLoad_WithImport() {
+        TestConfigLoader loader = new TestConfigLoader();
+        loader.addResource("tasks.groovy", "task { id 'T1'; title 'Task 1' }");
+        loader.addResource("config.groovy", "importConfig 'tasks.groovy'; group { name 'G1' }");
 
-        Path configFile = tempDir.resolve("config.groovy");
-        String configContent = "importConfig 'tasks.groovy'\n" +
-                               "group { name 'G1' }";
-        Files.writeString(configFile, configContent);
-
-        ConfigLoader loader = new ConfigLoader();
-        ScriptData data = loader.load(configFile);
+        ScriptData data = loader.load("config.groovy");
 
         assertEquals(1, data.getTasks().size());
         assertEquals("T1", data.getTasks().get(0).getId());
@@ -47,41 +46,33 @@ public class ConfigLoaderTest {
     }
 
     @Test
-    public void testLoad_CircularImport() throws IOException {
-        Path fileA = tempDir.resolve("a.groovy");
-        Files.writeString(fileA, "importConfig 'b.groovy'; task { id 'A' }");
+    public void testLoad_CircularImport() {
+        TestConfigLoader loader = new TestConfigLoader();
+        loader.addResource("a.groovy", "importConfig 'b.groovy'; task { id 'A' }");
+        loader.addResource("b.groovy", "importConfig 'a.groovy'; task { id 'B' }");
 
-        Path fileB = tempDir.resolve("b.groovy");
-        Files.writeString(fileB, "importConfig 'a.groovy'; task { id 'B' }");
-
-        ConfigLoader loader = new ConfigLoader();
-        ScriptData data = loader.load(fileA);
+        ScriptData data = loader.load("a.groovy");
 
         assertEquals(2, data.getTasks().size());
     }
 
     @Test
     public void testLoad_FileNotFound() {
-        ConfigLoader loader = new ConfigLoader();
-        Path nonExistentFile = tempDir.resolve("nonexistent.groovy");
-        assertThrows(IllegalArgumentException.class, () -> loader.load(nonExistentFile));
+        TestConfigLoader loader = new TestConfigLoader();
+        assertThrows(IllegalArgumentException.class, () -> loader.load("nonexistent.groovy"));
     }
 
     @Test
-    public void testLoad_ImportNotFound() throws IOException {
-        Path configFile = tempDir.resolve("config.groovy");
-        Files.writeString(configFile, "importConfig 'nonexistent.groovy'");
-
-        ConfigLoader loader = new ConfigLoader();
-        assertThrows(IllegalArgumentException.class, () -> loader.load(configFile));
+    public void testLoad_ImportNotFound() {
+        TestConfigLoader loader = new TestConfigLoader();
+        loader.addResource("config.groovy", "importConfig 'nonexistent.groovy'");
+        assertThrows(IllegalArgumentException.class, () -> loader.load("config.groovy"));
     }
 
     @Test
-    public void testDsl_IllegalArgument() throws IOException {
-        Path configFile = tempDir.resolve("config.groovy");
-        Files.writeString(configFile, "task 'not a closure'");
-
-        ConfigLoader loader = new ConfigLoader();
-        assertThrows(IllegalArgumentException.class, () -> loader.load(configFile));
+    public void testDsl_IllegalArgument() {
+        TestConfigLoader loader = new TestConfigLoader();
+        loader.addResource("config.groovy", "task 'not a closure'");
+        assertThrows(IllegalArgumentException.class, () -> loader.load("config.groovy"));
     }
 }

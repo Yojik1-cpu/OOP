@@ -7,8 +7,8 @@ import model.LabTask;
 import java.time.LocalDate;
 
 public class ScoreCalculator {
-    public double calculateScore(LabTask task, Assignment assignment,
-                                 GlobalSettings settings, LocalDate firstCommitDate, LocalDate lastCommitDate) {
+    public double calculateScore(LabTask task, Assignment assignment, LocalDate firstCommitDate,
+                                 LocalDate lastCommitDate) {
         double baseScore;
         if (assignment.getScore() != null) {
             baseScore = assignment.getScore().doubleValue();

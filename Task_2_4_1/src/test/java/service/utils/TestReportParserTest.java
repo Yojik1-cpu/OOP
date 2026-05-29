@@ -1,6 +1,6 @@
 package service.utils;
 
-import service.build.TestStats;
+import service.grading.TestStats;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 

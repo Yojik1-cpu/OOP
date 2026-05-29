@@ -4,7 +4,6 @@ import groovy.lang.Closure;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.nio.file.Path;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +14,7 @@ public class ConfigDslContextTest {
     @Test
     public void testTaskDsl() {
         ScriptData data = new ScriptData();
-        ConfigDslContext context = new ConfigDslContext(data, null, Path.of("."));
+        ConfigDslContext context = new ConfigDslContext(data, null);
         
         context.task(new Closure<Void>(null) {
             public void doCall() {
@@ -39,7 +38,7 @@ public class ConfigDslContextTest {
     @Test
     public void testGroupDsl() {
         ScriptData data = new ScriptData();
-        ConfigDslContext context = new ConfigDslContext(data, null, Path.of("."));
+        ConfigDslContext context = new ConfigDslContext(data, null);
 
         context.group(new Closure<Void>(null) {
             public void doCall() {
@@ -67,7 +66,7 @@ public class ConfigDslContextTest {
     @Test
     public void testAssignmentDsl() {
         ScriptData data = new ScriptData();
-        ConfigDslContext context = new ConfigDslContext(data, null, Path.of("."));
+        ConfigDslContext context = new ConfigDslContext(data, null);
 
         context.assignment(new Closure<Void>(null) {
             public void doCall() {
@@ -91,7 +90,7 @@ public class ConfigDslContextTest {
     @Test
     public void testCheckpointDsl() {
         ScriptData data = new ScriptData();
-        ConfigDslContext context = new ConfigDslContext(data, null, Path.of("."));
+        ConfigDslContext context = new ConfigDslContext(data, null);
 
         context.checkpoint(new Closure<Void>(null) {
             public void doCall() {
@@ -111,7 +110,7 @@ public class ConfigDslContextTest {
     @Test
     public void testGlobalSettingsDsl() {
         ScriptData data = new ScriptData();
-        ConfigDslContext context = new ConfigDslContext(data, null, Path.of("."));
+        ConfigDslContext context = new ConfigDslContext(data, null);
 
         context.globalSettings(new Closure<Void>(null) {
             public void doCall() {
@@ -144,11 +143,10 @@ public class ConfigDslContextTest {
     @Test
     public void testImportConfig() {
         ConfigLoader mockLoader = Mockito.mock(ConfigLoader.class);
-        Path baseDir = Path.of(".");
-        ConfigDslContext context = new ConfigDslContext(new ScriptData(), mockLoader, baseDir);
+        ConfigDslContext context = new ConfigDslContext(new ScriptData(), mockLoader);
 
         context.importConfig("other.groovy");
 
-        verify(mockLoader).importConfig("other.groovy", baseDir);
+        verify(mockLoader).importConfig("other.groovy");
     }
 }

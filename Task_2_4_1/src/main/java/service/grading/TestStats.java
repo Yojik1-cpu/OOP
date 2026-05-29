@@ -1,4 +1,4 @@
-package service.build;
+package service.grading;
 
 public class TestStats {
     public final int total;

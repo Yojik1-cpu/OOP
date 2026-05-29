@@ -4,27 +4,27 @@ import groovy.lang.Binding;
 import groovy.lang.Closure;
 import groovy.lang.GroovyShell;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.function.Consumer;
 
 public class ConfigLoader {
-    private final Set<Path> loadedFiles = new HashSet<>();
+    private final Set<String> loadedFiles = new HashSet<>();
     private GroovyShell groovyShell;
     private ScriptData scriptData;
     private ConfigDslContext context;
 
-    public ScriptData load(Path configPath) {
+    public ScriptData load(String resourcePath) {
         this.scriptData = new ScriptData();
         this.loadedFiles.clear();
         
-        Path normalized = configPath.toAbsolutePath().normalize();
-        
         Binding binding = new Binding();
-        this.context = new ConfigDslContext(scriptData, this, normalized.getParent());
+        this.context = new ConfigDslContext(scriptData, this);
         
         binding.setVariable("task", createClosure(c -> context.task(c)));
         binding.setVariable("group", createClosure(c -> context.group(c)));
@@ -35,31 +35,36 @@ public class ConfigLoader {
 
         this.groovyShell = new GroovyShell(binding);
         
-        executeFile(normalized);
+        executeFile(resourcePath);
         return scriptData;
     }
 
-    public void importConfig(String path, Path baseDir) {
-        Path imported = baseDir.resolve(path).toAbsolutePath().normalize();
-        executeFile(imported);
+    public void importConfig(String resourcePath) {
+        executeFile(resourcePath);
     }
 
-    private void executeFile(Path path) {
-        if (!loadedFiles.add(path)) {
+    protected String readResource(String resourcePath) {
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
+            if (is == null) return null;
+            try (Scanner scanner = new Scanner(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                return scanner.useDelimiter("\\A").hasNext() ? scanner.next() : "";
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to read resource: " + resourcePath, e);
+        }
+    }
+
+    private void executeFile(String resourcePath) {
+        if (!loadedFiles.add(resourcePath)) {
             return;
         }
-        File file = path.toFile();
-        if (!file.exists()) {
-            throw new IllegalArgumentException("Config file not found: " + path);
+        
+        String scriptContent = readResource(resourcePath);
+        if (scriptContent == null) {
+            throw new IllegalArgumentException("Config file not found in resources: " + resourcePath);
         }
 
-        context.setCurrentBaseDir(path.getParent());
-
-        try {
-            groovyShell.evaluate(file);
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to evaluate config: " + file.getAbsolutePath(), e);
-        }
+        groovyShell.evaluate(scriptContent, resourcePath);
     }
 
     private Closure<?> createClosure(Consumer<Closure<?>> consumer) {

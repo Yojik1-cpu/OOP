@@ -1,6 +1,6 @@
 package service.utils;
 
-import service.build.TestStats;
+import service.grading.TestStats;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,7 +14,8 @@ import java.util.stream.Stream;
 
 public class TestReportParser {
 
-    public static TestStats parseXmlReports(Path reportsDir, boolean commandSuccessful, String rawOutput, Double codeCoverage) {
+    public static TestStats parseXmlReports(Path reportsDir, boolean commandSuccessful, String rawOutput,
+                                            Double codeCoverage) {
         if (!Files.exists(reportsDir) || !Files.isDirectory(reportsDir)) {
             return new TestStats(0, commandSuccessful ? 0 : 1,
                     0, commandSuccessful, rawOutput, codeCoverage);

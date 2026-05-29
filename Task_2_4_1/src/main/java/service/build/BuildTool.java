@@ -1,6 +1,7 @@
 package service.build;
 
 import model.GlobalSettings;
+import service.grading.TestStats;
 import service.utils.ProcessUtils.CommandResult;
 
 import java.io.IOException;

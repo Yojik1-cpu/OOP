@@ -1,6 +1,7 @@
 package service.build;
 
 import model.GlobalSettings;
+import service.grading.TestStats;
 import service.utils.JacocoReportParser;
 import service.utils.ProcessUtils;
 import service.utils.ProcessUtils.CommandResult;
@@ -26,22 +27,25 @@ public class MavenBuildTool implements BuildTool {
     public CommandResult compile(Path projectDir, GlobalSettings settings)
             throws IOException, InterruptedException {
         long timeout = Optional.ofNullable(settings.getBuildTimeoutSeconds()).orElse(300L);
-        return ProcessUtils.runCommand(resolveCommand(projectDir, "compile", "test-compile"), projectDir, timeout);
+        return ProcessUtils
+                .runCommand(resolveCommand(projectDir, "compile", "test-compile"), projectDir, timeout);
     }
 
     @Override
     public CommandResult generateDocs(Path projectDir, GlobalSettings settings)
             throws IOException, InterruptedException {
         long timeout = Optional.ofNullable(settings.getBuildTimeoutSeconds()).orElse(300L);
-        return ProcessUtils.runCommand(resolveCommand(projectDir, "javadoc:javadoc"), projectDir, timeout);
+        return ProcessUtils
+                .runCommand(resolveCommand(projectDir, "javadoc:javadoc"), projectDir, timeout);
     }
 
     @Override
     public TestStats runTests(Path projectDir, GlobalSettings settings)
             throws IOException, InterruptedException {
         long testTimeout = Optional.ofNullable(settings.getTestTimeoutSeconds()).orElse(300L);
-        CommandResult result = ProcessUtils
-                .runCommand(resolveCommand(projectDir, "clean", "test", "jacoco:report"), projectDir, testTimeout);
+        CommandResult result = ProcessUtils.
+                runCommand(resolveCommand(projectDir, "clean", "test", "jacoco:report"),
+                        projectDir, testTimeout);
         if (result.exitCode != 0) {
             SimpleLogger.warn("Maven tests or jacoco failed for project in " + projectDir + ":\n" + result.output);
         }

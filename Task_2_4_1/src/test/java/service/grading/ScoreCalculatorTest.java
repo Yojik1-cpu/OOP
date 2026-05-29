@@ -25,7 +25,7 @@ public class ScoreCalculatorTest {
         
         LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
+        double score = calculator.calculateScore(task, assignment, commitDate, commitDate);
         assertEquals(2.0, score);
     }
 
@@ -40,7 +40,7 @@ public class ScoreCalculatorTest {
         
         LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
+        double score = calculator.calculateScore(task, assignment, commitDate, commitDate);
         assertEquals(1.5, score);
     }
 
@@ -55,7 +55,7 @@ public class ScoreCalculatorTest {
         
         LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
+        double score = calculator.calculateScore(task, assignment, commitDate, commitDate);
         assertEquals(1.5, score);
     }
 
@@ -70,7 +70,7 @@ public class ScoreCalculatorTest {
         
         LocalDate commitDate = LocalDate.now();
 
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
+        double score = calculator.calculateScore(task, assignment, commitDate, commitDate);
         assertEquals(1.0, score);
     }
 
@@ -83,7 +83,7 @@ public class ScoreCalculatorTest {
         assignment.setScore(1);
         
         LocalDate commitDate = LocalDate.now();
-        double score = calculator.calculateScore(task, assignment, new GlobalSettings(), commitDate, commitDate);
+        double score = calculator.calculateScore(task, assignment, commitDate, commitDate);
         assertEquals(1.0, score);
     }
 }

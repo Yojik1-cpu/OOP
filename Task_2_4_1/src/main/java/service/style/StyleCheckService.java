@@ -51,6 +51,18 @@ public class StyleCheckService {
         }
     }
 
+    public static class StyleResult {
+        public final boolean passed;
+        public final int errorsCount;
+        public final String message;
+
+        public StyleResult(boolean passed, int errorsCount, String message) {
+            this.passed = passed;
+            this.errorsCount = errorsCount;
+            this.message = message;
+        }
+    }
+
     private static Path findCheckstyleConfig(Path repoDir) {
         Path[] possiblePaths = {
                 repoDir.resolve(".github").resolve("google_checks.xml"),
@@ -72,18 +84,6 @@ public class StyleCheckService {
                     .collect(Collectors.toList());
         } catch (IOException e) {
             return List.of();
-        }
-    }
-
-    public static class StyleResult {
-        public final boolean passed;
-        public final int errorsCount;
-        public final String message;
-
-        public StyleResult(boolean passed, int errorsCount, String message) {
-            this.passed = passed;
-            this.errorsCount = errorsCount;
-            this.message = message;
         }
     }
 

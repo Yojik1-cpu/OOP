@@ -1,6 +1,8 @@
 package service.build;
 
 import org.junit.jupiter.api.Test;
+import service.grading.TestStats;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestStatsTest {

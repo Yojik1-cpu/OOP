@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 import org.mockito.Mockito;
 import service.build.GradleBuildTool;
-import service.build.TestStats;
 import service.git.GitService;
 import service.utils.ProcessUtils;
 
@@ -23,7 +22,7 @@ public class GradingServiceTest {
     @Test
     public void testExecuteGrading_Success() {
         try (MockedConstruction<GitService> mockedGit = Mockito.mockConstruction(GitService.class, (mock, context) -> {
-            Mockito.when(mock.cloneRepository(any(), any(), any())).thenAnswer(invocation -> {
+            Mockito.when(mock.prepareRepository(any(), any(), any())).thenAnswer(invocation -> {
                 Path repoDir = invocation.getArgument(1);
                 Files.createDirectories(repoDir.resolve("Task1"));
                 return true;
@@ -95,7 +94,7 @@ public class GradingServiceTest {
     @Test
     public void testExecuteGrading_GitCloneFails() {
         try (MockedConstruction<GitService> mockedGit = Mockito.mockConstruction(GitService.class, (mock, context) -> {
-            Mockito.when(mock.cloneRepository(any(), any(), any())).thenReturn(false);
+            Mockito.when(mock.prepareRepository(any(), any(), any())).thenReturn(false);
         })) {
 
             GradingService gradingService = new GradingService();
@@ -125,7 +124,7 @@ public class GradingServiceTest {
 
             FinalReport.GradingRow row = report.getRows().get(0);
             assertFalse(row.isGitOk());
-            assertEquals("Git clone failed", row.getMessage());
+            assertTrue(row.getMessage().contains("Git clone/fetch failed"));
 
             gradingService.close();
         }

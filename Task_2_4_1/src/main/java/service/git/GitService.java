@@ -5,6 +5,7 @@ import service.utils.ProcessUtils;
 import service.utils.SimpleLogger;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,36 +35,29 @@ public class GitService {
         }
     }
 
-    public boolean cloneRepository(String repoUrl, Path repoDir, GlobalSettings settings)
+    public boolean prepareRepository(String repoUrl, Path repoDir, GlobalSettings settings)
             throws IOException, InterruptedException {
         long timeout = Optional.ofNullable(settings.getGitTimeoutSeconds()).orElse(180L);
-        ProcessUtils.CommandResult clone = ProcessUtils
-                .runCommand(List.of("git", "clone", repoUrl, repoDir.toString()), null, timeout);
-        if (clone.exitCode != 0) {
-            return false;
-        }
-        return checkoutMainOrMaster(repoDir, timeout);
-    }
 
-    private boolean checkoutMainOrMaster(Path repoDir, long timeoutSeconds)
-            throws IOException, InterruptedException {
-        ProcessUtils.CommandResult branchList = ProcessUtils
-                .runCommand(List.of("git", "branch", "-r"), repoDir, timeoutSeconds);
-        if (branchList.exitCode != 0) {
-            return false;
-        }
-        String out = branchList.output;
-        String targetBranch;
-        if (out.contains("origin/main")) {
-            targetBranch = "main";
-        } else if (out.contains("origin/master")) {
-            targetBranch = "master";
+        if (Files.exists(repoDir.resolve(".git"))) {
+            SimpleLogger.info("Repository exists, fetching updates for " + repoUrl);
+            ProcessUtils.CommandResult fetchResult = ProcessUtils
+                    .runCommand(List.of("git", "fetch"), repoDir, timeout);
+            if (fetchResult.exitCode != 0) {
+                SimpleLogger.error("Failed to fetch repository " + repoUrl + ": " + fetchResult.output);
+                return false;
+            }
+            return checkoutMainOrMaster(repoDir, timeout, true);
         } else {
-            return true;
+            SimpleLogger.info("Cloning repository " + repoUrl);
+            ProcessUtils.CommandResult clone = ProcessUtils
+                    .runCommand(List.of("git", "clone", repoUrl, repoDir.toString()), null, timeout);
+            if (clone.exitCode != 0) {
+                SimpleLogger.error("Failed to clone repository " + repoUrl + ": " + clone.output);
+                return false;
+            }
+            return checkoutMainOrMaster(repoDir, timeout, false);
         }
-        ProcessUtils.CommandResult checkout = ProcessUtils
-                .runCommand(List.of("git", "checkout", targetBranch), repoDir, timeoutSeconds);
-        return checkout.exitCode == 0;
     }
 
     public List<LocalDate> getCommitDates(Path repoDir) {
@@ -113,5 +107,35 @@ public class GitService {
             SimpleLogger.warn("Failed to get last commit date for " + relativePath + ": " + e.getMessage());
         }
         return null;
+    }
+
+    private boolean checkoutMainOrMaster(Path repoDir, long timeoutSeconds, boolean isUpdate)
+            throws IOException, InterruptedException {
+        ProcessUtils.CommandResult branchList = ProcessUtils
+                .runCommand(List.of("git", "branch", "-r"), repoDir, timeoutSeconds);
+        if (branchList.exitCode != 0) {
+            return false;
+        }
+        String out = branchList.output;
+        String targetBranch;
+        if (out.contains("origin/main")) {
+            targetBranch = "main";
+        } else if (out.contains("origin/master")) {
+            targetBranch = "master";
+        } else {
+            return true;
+        }
+
+        ProcessUtils.CommandResult checkout = ProcessUtils
+                .runCommand(List.of("git", "checkout", targetBranch), repoDir, timeoutSeconds);
+        if (checkout.exitCode != 0) {
+            return false;
+        }
+        if (isUpdate) {
+            ProcessUtils.CommandResult reset = ProcessUtils
+                    .runCommand(List.of("git", "reset", "--hard", "origin/" + targetBranch), repoDir, timeoutSeconds);
+            return reset.exitCode == 0;
+        }
+        return true;
     }
 }

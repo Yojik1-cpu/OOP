@@ -8,23 +8,16 @@ import model.LabTask;
 import model.Student;
 import model.StudentGroup;
 
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class ConfigDslContext {
     private final ScriptData scriptData;
     private final ConfigLoader configLoader;
-    private Path currentBaseDir;
 
-    public ConfigDslContext(ScriptData scriptData, ConfigLoader configLoader, Path initialBaseDir) {
+    public ConfigDslContext(ScriptData scriptData, ConfigLoader configLoader) {
         this.scriptData = scriptData;
         this.configLoader = configLoader;
-        this.currentBaseDir = initialBaseDir;
-    }
-    
-    public void setCurrentBaseDir(Path currentBaseDir) {
-        this.currentBaseDir = currentBaseDir;
     }
 
     public void task(Closure<?> closure) {
@@ -61,14 +54,7 @@ public class ConfigDslContext {
     }
 
     public void importConfig(String path) {
-        configLoader.importConfig(path, currentBaseDir);
-    }
-
-    private static void runWithDelegate(Closure<?> closure, Object delegate) {
-        Closure<?> copy = (Closure<?>) closure.clone();
-        copy.setDelegate(delegate);
-        copy.setResolveStrategy(Closure.DELEGATE_FIRST);
-        copy.call();
+        configLoader.importConfig(path);
     }
 
     public static final class TaskDsl {
@@ -145,5 +131,11 @@ public class ConfigDslContext {
 
     private static LocalDate parseDate(String value) {
         return value == null ? null : LocalDate.parse(value);
+    }
+    private static void runWithDelegate(Closure<?> closure, Object delegate) {
+        Closure<?> copy = (Closure<?>) closure.clone();
+        copy.setDelegate(delegate);
+        copy.setResolveStrategy(Closure.DELEGATE_FIRST);
+        copy.call();
     }
 }

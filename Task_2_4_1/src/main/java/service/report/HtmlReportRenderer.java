@@ -41,8 +41,10 @@ public class HtmlReportRenderer {
 
         html.append("<h1>OOP Grading Report</h1>");
         html.append("<div class=\"summary-box\">");
-        html.append("<p><strong>Total assignments processed:</strong> ").append(report.getTotalAssignments()).append("</p>");
-        html.append("<p><strong>Successful checks:</strong> ").append(report.getSuccessfulAssignments()).append("</p>");
+        html.append("<p><strong>Total assignments processed:</strong> ").append(report.getTotalAssignments())
+                .append("</p>");
+        html.append("<p><strong>Successful checks:</strong> ").append(report.getSuccessfulAssignments())
+                .append("</p>");
         html.append("<p><strong>Failed checks:</strong> ").append(report.getFailedAssignments()).append("</p>");
         html.append("</div>");
 
@@ -53,7 +55,8 @@ public class HtmlReportRenderer {
         }
 
         for (LabTask task : data.getTasks()) {
-            html.append("<h3>Task: ").append(escape(task.getTitle())).append(" (").append(escape(task.getId())).append(")</h3>");
+            html.append("<h3>Task: ").append(escape(task.getTitle())).append(" (").append(escape(task.getId()))
+                    .append(")</h3>");
             html.append("<table><thead><tr>")
                     .append("<th class=\"name-col\">Student</th><th class=\"date-col\">First Commit</th><th class=\"date-col\">Last Commit</th>")
                     .append("<th class=\"test-col\">Build</th><th class=\"test-col\">Docs</th>")
@@ -82,18 +85,23 @@ public class HtmlReportRenderer {
                     }
 
                     html.append("<tr>")
-                            .append("<td class=\"name-col\">").append(escape(row.getStudentGithubNick())).append("</td>")
-                            .append("<td class=\"date-col\">").append(escape(row.getFirstCommitDate() != null ? row.getFirstCommitDate().toString() : "-")).append("</td>")
-                            .append("<td class=\"date-col\">").append(escape(row.getLastCommitDate() != null ? row.getLastCommitDate().toString() : "-")).append("</td>")
+                            .append("<td class=\"name-col\">").append(escape(row.getStudentGithubNick()))
+                            .append("</td>")
+                            .append("<td class=\"date-col\">").append(escape(row.getFirstCommitDate() != null ?
+                                    row.getFirstCommitDate().toString() : "-")).append("</td>")
+                            .append("<td class=\"date-col\">").append(escape(row.getLastCommitDate() != null ?
+                                    row.getLastCommitDate().toString() : "-")).append("</td>")
                             .append(formatBool(row.isBuildOk(), "test-col"))
                             .append(formatBool(row.isDocsOk(), "test-col"))
                             .append(formatBool(row.isStyleOk(), "test-col"))
-                            .append("<td class=\"test-col\">").append(row.getStyleErrors() >= 0 ? Integer.toString(row.getStyleErrors()) : "-").append("</td>")
+                            .append("<td class=\"test-col\">").append(row.getStyleErrors() >= 0 ?
+                                    Integer.toString(row.getStyleErrors()) : "-").append("</td>")
                             .append("<td class=\"test-col\">").append(row.getTotalTests()).append("</td>")
                             .append("<td class=\"test-col\">").append(row.getPassedTests()).append("</td>")
                             .append("<td class=\"test-col\">").append(row.getFailedTests()).append("</td>")
                             .append(coverageCell)
-                            .append("<td class=\"score-col\">").append(String.format(Locale.US, "%.1f", row.getFinalScore())).append("</td>")
+                            .append("<td class=\"score-col\">").append(String.format(Locale.US, "%.1f",
+                                    row.getFinalScore())).append("</td>")
                             .append("<td class=\"msg-col\">").append(escape(row.getMessage())).append("</td>")
                             .append("</tr>");
                 } else {
@@ -135,17 +143,21 @@ public class HtmlReportRenderer {
 
             String activityText;
             if (summary.getTotalWeeks() > 0) {
-                activityText = String.format(Locale.US, "%d/%d (%.0f%%)", summary.getActiveWeeks(), summary.getTotalWeeks(), summary.getActivityPercentage() * 100);
+                activityText = String.format(Locale.US, "%d/%d (%.0f%%)", summary.getActiveWeeks(),
+                        summary.getTotalWeeks(), summary.getActivityPercentage() * 100);
             } else {
                 activityText = "-";
             }
 
             html.append("<tr>")
-                    .append("<td class=\"name-col\">").append(escape(summary.getGithubNick() + " (" + safe(summary.getFullName()) + ")")).append("</td>")
+                    .append("<td class=\"name-col\">").append(escape(summary.getGithubNick() + " ("
+                            + safe(summary.getFullName()) + ")")).append("</td>")
                     .append("<td class=\"test-col\">").append(escape(activityText)).append("</td>")
-                    .append("<td class=\"score-col\">").append(String.format(Locale.US, "%.1f", summary.getTotalScore())).append("</td>")
+                    .append("<td class=\"score-col\">").append(String.format(Locale.US, "%.1f",
+                            summary.getTotalScore())).append("</td>")
                     .append("<td class=\"score-col\">").append(summary.getMaxScore()).append("</td>")
-                    .append("<td class=\"score-col\"><strong>").append(escape(summary.getFinalGrade())).append("</strong></td>")
+                    .append("<td class=\"score-col\"><strong>").append(escape(summary.getFinalGrade()))
+                    .append("</strong></td>")
                     .append("<td class=\"msg-col\">").append(cp.toString()).append("</td>")
                     .append("</tr>");
         }
@@ -174,6 +186,9 @@ public class HtmlReportRenderer {
 
     private static String escape(String value) {
         if (value == null) return "-";
-        return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;");
+        return value.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;");
     }
 }

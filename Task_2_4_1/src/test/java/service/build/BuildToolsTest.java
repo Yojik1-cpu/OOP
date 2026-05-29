@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import service.grading.TestStats;
 import service.utils.JacocoReportParser;
 import service.utils.ProcessUtils;
 import service.utils.TestReportParser;
