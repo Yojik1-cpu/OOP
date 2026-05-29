@@ -118,9 +118,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(dsl.ScriptData,dsl.ConfigLoader,java.nio.file.Path)" class="member-name-link">ConfigDslContext</a><wbr>(<a href="ScriptData.html" title="class in dsl">ScriptData</a>&nbsp;scriptData,
- <a href="ConfigLoader.html" title="class in dsl">ConfigLoader</a>&nbsp;configLoader,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;initialBaseDir)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(dsl.ScriptData,dsl.ConfigLoader)" class="member-name-link">ConfigDslContext</a><wbr>(<a href="ScriptData.html" title="class in dsl">ScriptData</a>&nbsp;scriptData,
+ <a href="ConfigLoader.html" title="class in dsl">ConfigLoader</a>&nbsp;configLoader)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -152,11 +151,8 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#importConfig(java.lang.String)" class="member-name-link">importConfig</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCurrentBaseDir(java.nio.file.Path)" class="member-name-link">setCurrentBaseDir</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;currentBaseDir)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#task(groovy.lang.Closure)" class="member-name-link">task</a><wbr>(groovy.lang.Closure&lt;?&gt;&nbsp;closure)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#task(groovy.lang.Closure)" class="member-name-link">task</a><wbr>(groovy.lang.Closure&lt;?&gt;&nbsp;closure)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -175,11 +171,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(dsl.ScriptData,dsl.ConfigLoader,java.nio.file.Path)">
+<section class="detail" id="&lt;init&gt;(dsl.ScriptData,dsl.ConfigLoader)">
 <h3>ConfigDslContext</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ConfigDslContext</span><wbr><span class="parameters">(<a href="ScriptData.html" title="class in dsl">ScriptData</a>&nbsp;scriptData,
- <a href="ConfigLoader.html" title="class in dsl">ConfigLoader</a>&nbsp;configLoader,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;initialBaseDir)</span></div>
+ <a href="ConfigLoader.html" title="class in dsl">ConfigLoader</a>&nbsp;configLoader)</span></div>
 </section>
 </li>
 </ul>
@@ -190,12 +185,6 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
-<li>
-<section class="detail" id="setCurrentBaseDir(java.nio.file.Path)">
-<h3>setCurrentBaseDir</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCurrentBaseDir</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;currentBaseDir)</span></div>
-</section>
-</li>
 <li>
 <section class="detail" id="task(groovy.lang.Closure)">
 <h3>task</h3>
