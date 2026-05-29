@@ -16,14 +16,15 @@ public class Main {
         int workers = 2;
 
         Thread masterThread = new Thread(() -> {
-            Master master = new Master(port, 60000);
-            DistributedPrimeFinder finder = new DistributedPrimeFinder(master, workers);
-            long start = System.currentTimeMillis();
-            boolean hasNonPrime = finder.hasNonPrime(primes);
-            long end = System.currentTimeMillis();
-            
-            System.out.println("Has non-prime: " + hasNonPrime);
-            System.out.println("Time taken: " + (end - start) + " ms");
+            try (Master master = new Master(port, 60000)) {
+                DistributedPrimeFinder finder = new DistributedPrimeFinder(master, workers);
+                long start = System.currentTimeMillis();
+                boolean hasNonPrime = finder.hasNonPrime(primes);
+                long end = System.currentTimeMillis();
+                
+                System.out.println("Has non-prime: " + hasNonPrime);
+                System.out.println("Time taken: " + (end - start) + " ms");
+            }
         });
         masterThread.start();
 

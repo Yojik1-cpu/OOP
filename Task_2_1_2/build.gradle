@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'application'
 }
 
 group = 'snake'
@@ -32,4 +33,19 @@ jacocoTestReport {
             ])
         }))
     }
+}
+
+application {
+    mainClassName = 'foundPrime.runScripts.RunMaster'
+}
+
+task runWorker(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'foundPrime.runScripts.RunLocalWorker'
+}
+
+task runMaster(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'foundPrime.runScripts.RunMaster'
+    args '2', '8080'
 }

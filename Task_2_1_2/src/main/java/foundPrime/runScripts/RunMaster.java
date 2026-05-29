@@ -19,16 +19,17 @@ public class RunMaster {
 
         System.out.println("Starting Master node. Awaiting connections from " + expectedWorkers + " Worker(s)...");
 
-        Master master = new Master(port, 300_000);
-        DistributedPrimeFinder finder = new DistributedPrimeFinder(master, expectedWorkers);
-        
-        long start = System.currentTimeMillis();
-        boolean hasNonPrime = finder.hasNonPrime(primes);
-        long end = System.currentTimeMillis();
-        
-        System.out.println("Calculations completed!");
-        System.out.println("Has non-prime number: " + hasNonPrime);
-        System.out.println("Time taken: " + (end - start) + " ms");
+        try (Master master = new Master(port, 300_000)) {
+            DistributedPrimeFinder finder = new DistributedPrimeFinder(master, expectedWorkers);
+            
+            long start = System.currentTimeMillis();
+            boolean hasNonPrime = finder.hasNonPrime(primes);
+            long end = System.currentTimeMillis();
+            
+            System.out.println("Calculations completed!");
+            System.out.println("Has non-prime number: " + hasNonPrime);
+            System.out.println("Time taken: " + (end - start) + " ms");
+        }
         
         System.exit(0);
     }

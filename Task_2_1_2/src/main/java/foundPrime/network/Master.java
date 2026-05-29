@@ -8,65 +8,107 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.List;
 
-public class Master {
+public class Master implements AutoCloseable {
     private final int port;
     private final int timeoutMs;
 
     private final ConcurrentLinkedQueue<Task> taskQueue = new ConcurrentLinkedQueue<>();
     private final ConcurrentHashMap<Integer, Task> runningTasks = new ConcurrentHashMap<>();
-    
+
     private final AtomicBoolean foundNonPrime = new AtomicBoolean(false);
     private final AtomicInteger completedTasks = new AtomicInteger(0);
     private int totalTasks;
+
+    private final ExecutorService serverExecutor = Executors.newSingleThreadExecutor();
+    private final ExecutorService workerPool = Executors.newCachedThreadPool();
+    private volatile ServerSocket serverSocket;
 
     public Master(int port, int timeoutMs) {
         this.port = port;
         this.timeoutMs = timeoutMs;
     }
-    
+
     public boolean processTasks(List<Task> tasks) {
         this.totalTasks = tasks.size();
         this.taskQueue.addAll(tasks);
-        
+        this.foundNonPrime.set(false);
+        this.completedTasks.set(0);
+        this.runningTasks.clear();
+
         CountDownLatch doneSignal = new CountDownLatch(1);
-        ExecutorService serverExecutor = Executors.newSingleThreadExecutor();
-        ExecutorService workerPool = Executors.newCachedThreadPool();
 
         serverExecutor.submit(() -> {
-            try (ServerSocket serverSocket = new ServerSocket(port)) {
+            try (ServerSocket ss = new ServerSocket(port)) {
+                this.serverSocket = ss;
                 System.out.println("Master started on port " + port);
-                
-                while (!foundNonPrime.get() && completedTasks.get() < totalTasks) {
-                    serverSocket.setSoTimeout(1000);
+                ss.setSoTimeout(1000);
+                while (!foundNonPrime.get() && completedTasks.get() < totalTasks && !Thread.currentThread().isInterrupted()) {
                     try {
-                        Socket workerSocket = serverSocket.accept();
+                        Socket workerSocket = ss.accept();
                         System.out.println("Accepted worker from " + workerSocket.getInetAddress());
                         workerPool.submit(new WorkerHandler(workerSocket, doneSignal));
                     } catch (java.net.SocketTimeoutException e) {}
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                if (serverSocket == null || !serverSocket.isClosed()) {
+                    System.err.println("Master server socket error: " + e.getMessage());
+                }
             } finally {
                 doneSignal.countDown();
             }
         });
 
         try {
-            doneSignal.await(timeoutMs, TimeUnit.MILLISECONDS);
+            if (!doneSignal.await(timeoutMs, TimeUnit.MILLISECONDS)) {
+                System.err.println("Master timed out waiting for tasks to complete.");
+            }
         } catch (InterruptedException e) {
             System.err.println("Master interrupted.");
             Thread.currentThread().interrupt();
         }
 
-        serverExecutor.shutdownNow();
-        workerPool.shutdownNow();
-
         return foundNonPrime.get();
+    }
+
+    @Override
+    public void close() {
+        // Stop accepting new connections
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                System.err.println("Error closing server socket: " + e.getMessage());
+            }
+        }
+
+        // Gracefully shutdown the worker pool.
+        // The running WorkerHandlers will finish their current loop, send "STOP", and terminate.
+        serverExecutor.shutdown();
+        workerPool.shutdown();
+        try {
+            if (!serverExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
+                serverExecutor.shutdownNow();
+            }
+            // Wait for workers to finish gracefully
+            if (!workerPool.awaitTermination(10, TimeUnit.SECONDS)) {
+                System.err.println("Worker pool did not terminate in time. Forcing shutdown.");
+                workerPool.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            serverExecutor.shutdownNow();
+            workerPool.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
     }
 
     private class WorkerHandler implements Runnable {
@@ -82,28 +124,27 @@ public class Master {
         public void run() {
             try (ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                  ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
-                 
+
                 while (!foundNonPrime.get() && completedTasks.get() < totalTasks) {
                     Task task = taskQueue.poll();
                     if (task != null) {
                         runningTasks.put(task.getTaskId(), task);
                         try {
-                            out.writeObject(task);
+                            out.writeUnshared(task);
                             out.flush();
-                            out.reset();
 
                             Object obj = in.readObject();
                             if (obj instanceof Result) {
                                 Result result = (Result) obj;
                                 runningTasks.remove(task.getTaskId());
                                 completedTasks.incrementAndGet();
-                                
+
                                 if (result.hasNonPrime()) {
                                     foundNonPrime.set(true);
                                     doneSignal.countDown();
                                     break;
                                 }
-                                
+
                                 if (completedTasks.get() == totalTasks) {
                                     doneSignal.countDown();
                                     break;
@@ -117,21 +158,28 @@ public class Master {
                             break;
                         }
                     } else {
+                        if (Thread.currentThread().isInterrupted()) {
+                            break;
+                        }
                         Thread.sleep(100);
                     }
                 }
-                
+
                 try {
-                    out.writeObject("STOP");
+                    out.writeUnshared("STOP");
                     out.flush();
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
 
             } catch (IOException | InterruptedException e) {
-                System.err.println("Worker handler error: " + e.getMessage());
+                if (!socket.isClosed()) {
+                    System.err.println("Worker handler error: " + e.getMessage());
+                }
             } finally {
                 try {
                     socket.close();
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
         }
     }
