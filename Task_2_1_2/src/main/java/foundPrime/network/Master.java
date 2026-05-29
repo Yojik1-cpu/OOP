@@ -82,7 +82,7 @@ public class Master implements AutoCloseable {
 
     @Override
     public void close() {
-        // Stop accepting new connections
+
         if (serverSocket != null) {
             try {
                 serverSocket.close();
@@ -91,15 +91,12 @@ public class Master implements AutoCloseable {
             }
         }
 
-        // Gracefully shutdown the worker pool.
-        // The running WorkerHandlers will finish their current loop, send "STOP", and terminate.
         serverExecutor.shutdown();
         workerPool.shutdown();
         try {
             if (!serverExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
                 serverExecutor.shutdownNow();
             }
-            // Wait for workers to finish gracefully
             if (!workerPool.awaitTermination(10, TimeUnit.SECONDS)) {
                 System.err.println("Worker pool did not terminate in time. Forcing shutdown.");
                 workerPool.shutdownNow();
